@@ -34,6 +34,8 @@ from sqlalchemy import (
     select,
 )
 
+from utils import print_table
+
 # ----------------------------------------------------------------------------
 # Setup: build the table and seed some data so we have something to query.
 # ----------------------------------------------------------------------------
@@ -75,12 +77,11 @@ with engine.begin() as conn:
 #
 # Use ``.all()`` when you know the result is small enough to fit in memory.
 # For very large queries you would iterate the result instead (see below).
-print("\n--- 1) All rows ---")
 with engine.connect() as conn:
-    rows = conn.execute(select(users_table)).all()
-    for row in rows:
-        # ``row`` supports both tuple-style row[0] and attribute-style row.name
-        print(f"id={row.id} name={row.name} age={row.age} email={row.email}")
+    # ``print_table`` consumes the cursor result and renders it as an ASCII
+    # table with column headers. Every example script uses this helper for
+    # row-by-row output so the visual style is consistent.
+    print_table(conn.execute(select(users_table)), title="1) All rows")
 
 
 # ----------------------------------------------------------------------------
@@ -93,13 +94,11 @@ with engine.connect() as conn:
 #
 # ``users_table.c`` is a namespace for the table's columns: ``c`` stands for
 # "columns". So ``users_table.c.name`` means "the ``name`` column of users".
-print("\n--- 2) Only name + age ---")
 with engine.connect() as conn:
-    rows = conn.execute(
-        select(users_table.c.name, users_table.c.age)
-    ).all()
-    for row in rows:
-        print(row)
+    print_table(
+        conn.execute(select(users_table.c.name, users_table.c.age)),
+        title="2) Only name + age",
+    )
 
 
 # ----------------------------------------------------------------------------
@@ -116,12 +115,9 @@ with engine.connect() as conn:
 # Tip on safety: never build WHERE clauses by string-formatting user input
 # (e.g. f"age > {x}"). Using column expressions like the line below makes
 # SQLAlchemy use bound parameters, which prevents SQL injection.
-print("\n--- 3) Users older than 25 ---")
 with engine.connect() as conn:
     stmt = select(users_table).where(users_table.c.age > 25)
-    rows = conn.execute(stmt).all()
-    for row in rows:
-        print(row)
+    print_table(conn.execute(stmt), title="3) Users older than 25")
 
 
 # ----------------------------------------------------------------------------
@@ -134,16 +130,13 @@ with engine.connect() as conn:
 # ``limit(n)`` keeps only the first ``n`` rows of the (already ordered)
 # result. Combining "order then limit" is the standard recipe for queries
 # like "the top 2 oldest users".
-print("\n--- 4) Top 2 oldest users ---")
 with engine.connect() as conn:
     stmt = (
         select(users_table)
         .order_by(users_table.c.age.desc())
         .limit(2)
     )
-    rows = conn.execute(stmt).all()
-    for row in rows:
-        print(row)
+    print_table(conn.execute(stmt), title="4) Top 2 oldest users")
 
 
 # ----------------------------------------------------------------------------

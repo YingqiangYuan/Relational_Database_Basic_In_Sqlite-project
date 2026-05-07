@@ -34,6 +34,8 @@ from sqlalchemy import (
     update,
 )
 
+from utils import print_table
+
 # ----------------------------------------------------------------------------
 # Setup: build the table and seed it.
 # ----------------------------------------------------------------------------
@@ -69,14 +71,12 @@ with engine.begin() as conn:
 def print_all(label: str) -> None:
     """Helper to dump the whole table so we can see UPDATEs taking effect.
 
-    Defined as a small function because we will call it three times below,
-    and copy-pasting a SELECT loop each time would obscure the lesson.
+    Defined as a small function because we will call it four times below,
+    and copy-pasting a SELECT each time would obscure the lesson. Internally
+    it delegates to ``print_table`` (in ``utils.py``) for nice formatting.
     """
     with engine.connect() as conn:
-        rows = conn.execute(select(users_table)).all()
-        print(f"\n--- {label} ---")
-        for row in rows:
-            print(row)
+        print_table(conn.execute(select(users_table)), title=label)
 
 
 print_all("State before any update")

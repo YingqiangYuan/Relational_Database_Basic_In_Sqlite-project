@@ -38,7 +38,10 @@ from sqlalchemy import (
     Integer,
     String,
     inspect,
+    select,
 )
+
+from utils import print_table
 
 # ----------------------------------------------------------------------------
 # Step 1: Create an "engine".
@@ -132,3 +135,15 @@ print("Columns of 'users':")
 for col in inspector.get_columns("users"):
     # Each ``col`` is a dict with keys like name, type, nullable, ...
     print(f"  - {col['name']:8s} type={col['type']!s:10s} nullable={col['nullable']}")
+
+
+# ----------------------------------------------------------------------------
+# Step 6: Show the (still empty) table via our pretty-printer.
+# ----------------------------------------------------------------------------
+# We have not inserted anything yet, so SELECT * FROM users has zero rows.
+# Printing it with ``print_table`` confirms two things at once:
+#   - the table really exists (otherwise the SELECT would error), and
+#   - its columns are exactly the four we declared above.
+# Subsequent example scripts will use the same helper to display data.
+with engine.connect() as conn:
+    print_table(conn.execute(select(users_table)), title="users (empty)")

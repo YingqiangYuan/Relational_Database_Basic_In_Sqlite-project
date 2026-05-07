@@ -34,6 +34,8 @@ from sqlalchemy import (
     delete,
 )
 
+from utils import print_table
+
 # ----------------------------------------------------------------------------
 # Setup: build the table and seed it with five rows.
 # ----------------------------------------------------------------------------
@@ -71,13 +73,11 @@ def print_all(label: str) -> None:
     """Print the entire table so we can see DELETEs taking effect.
 
     Same helper idea as in Example 04: factored out so the focus of the
-    script stays on the DELETE statements themselves, not on SELECT loops.
+    script stays on the DELETE statements themselves. Internally it uses
+    ``print_table`` (from ``utils.py``) for the actual rendering.
     """
     with engine.connect() as conn:
-        rows = conn.execute(select(users_table)).all()
-        print(f"\n--- {label} (rows = {len(rows)}) ---")
-        for row in rows:
-            print(row)
+        print_table(conn.execute(select(users_table)), title=label)
 
 
 print_all("State before any delete")

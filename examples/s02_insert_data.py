@@ -37,6 +37,8 @@ from sqlalchemy import (
     select,
 )
 
+from utils import print_table
+
 # ----------------------------------------------------------------------------
 # Setup: same in-memory database and same table definition as Example 01.
 # ----------------------------------------------------------------------------
@@ -108,10 +110,13 @@ with engine.begin() as conn:
 # We have not formally covered SELECT yet (that is Example 03), but we use a
 # tiny taste of it here just to verify the writes succeeded. The point is:
 # whatever you insert, you can immediately read back.
+#
+# Instead of looping and printing raw tuples, we hand the cursor result to
+# our shared ``print_table`` helper, which renders it as a nice ASCII table
+# with column headers. Every example script in this folder uses the same
+# helper so the output style stays consistent.
 with engine.connect() as conn:
-    rows = conn.execute(select(users_table)).all()
-    print("\n--- Current contents of users ---")
-    for row in rows:
-        # Each ``row`` behaves like a tuple but also lets you access columns
-        # by name: row.name, row.age, etc.
-        print(row)
+    print_table(
+        conn.execute(select(users_table)),
+        title="Current contents of users",
+    )
