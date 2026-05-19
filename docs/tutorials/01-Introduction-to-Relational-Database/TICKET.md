@@ -1,5 +1,7 @@
 # TICKET: Relational Database Basics — Learning Checklist
 
+[Tutorial](https://github.com/easyscale-academy/learn_relational_database_basic_in_sqlite-project/tree/01-Introduction-to-Relational-Database/)
+
 ## Objective
 
 Track your progress through the relational database module (branch `01-Introduction-to-Relational-Database`). Work through each section in order. Check items off as you go.
