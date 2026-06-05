@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Example 03 - Select Data (the "R" in CRUD)
+Example 23 - Select Data (the "R" in CRUD)
 ==========================================
 
 Goal of this script:

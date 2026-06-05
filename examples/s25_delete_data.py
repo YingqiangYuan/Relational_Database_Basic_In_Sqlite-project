@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Example 05 - Delete Data (the "D" in CRUD)
+Example 25 - Delete Data (the "D" in CRUD)
 ==========================================
 
 Goal of this script:
@@ -72,7 +72,7 @@ with engine.begin() as conn:
 def print_all(label: str) -> None:
     """Print the entire table so we can see DELETEs taking effect.
 
-    Same helper idea as in Example 04: factored out so the focus of the
+    Same helper idea as in Example 24: factored out so the focus of the
     script stays on the DELETE statements themselves. Internally it uses
     ``print_table`` (from ``utils.py``) for the actual rendering.
     """

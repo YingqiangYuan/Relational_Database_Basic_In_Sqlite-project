@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Example 01 - Create a Table
+Example 21 - Create a Table
 ===========================
 
 Goal of this script:

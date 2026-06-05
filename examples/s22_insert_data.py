@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Example 02 - Insert Data (the "C" in CRUD)
+Example 22 - Insert Data (the "C" in CRUD)
 ==========================================
 
 Goal of this script:
@@ -40,7 +40,7 @@ from sqlalchemy import (
 from utils import print_table
 
 # ----------------------------------------------------------------------------
-# Setup: same in-memory database and same table definition as Example 01.
+# Setup: same in-memory database and same table definition as Example 21.
 # ----------------------------------------------------------------------------
 # Each script in this folder is fully self-contained because an in-memory
 # SQLite database disappears the moment its Python process exits. That means
@@ -107,7 +107,7 @@ with engine.begin() as conn:
 # ----------------------------------------------------------------------------
 # Read everything back to confirm the inserts.
 # ----------------------------------------------------------------------------
-# We have not formally covered SELECT yet (that is Example 03), but we use a
+# We have not formally covered SELECT yet (that is Example 23), but we use a
 # tiny taste of it here just to verify the writes succeeded. The point is:
 # whatever you insert, you can immediately read back.
 #

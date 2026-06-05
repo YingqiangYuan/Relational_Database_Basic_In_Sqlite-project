@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Example 04 - Update Data (the "U" in CRUD)
+Example 24 - Update Data (the "U" in CRUD)
 ==========================================
 
 Goal of this script:
