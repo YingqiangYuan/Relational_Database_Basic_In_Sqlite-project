@@ -8,7 +8,7 @@
 
 先把调子定准：**这门课不是讲"关系数据库"的**。SQL 只是载体——它足够小，让你在零计算机背景（前提是你完成了本系列之前那门"用 AI 学习"的前置课）也能跟上；又足够完整，能把一整套学习方法跑下来。你真正来这门课学的，是**一套可复用的、AI 辅助的方法——拿到任何一个"技能尺度"的小 repo，怎样把它彻底吃透**。
 
-这个区分很关键。如果你学完后只记得 `select(users_table).where(...)`，那你只拿到 10% 的价值；如果你学完之后带走的是一套"五步法"——下一次拿到一个小 repo（一个消息队列库、一个鉴权库、一个 embedding 模型的 client、一个新框架、一个垂直领域的小项目）就能直接套上去——那你拿到的是另外那 90%。
+这个区分很关键。如果你学完后只记得 `select(users_table).where(...)`，那你只拿到 10% 的价值；如果你学完之后带走的是一套"六步法"——下一次拿到一个小 repo（一个消息队列库、一个鉴权库、一个 embedding 模型的 client、一个新框架、一个垂直领域的小项目）就能直接套上去——那你拿到的是另外那 90%。
 
 ### "项目级"工作 vs "技能级"小项目
 
@@ -23,17 +23,18 @@
 
 这里有一个很多学生一开始低估的事实：**未来几年你的职业生涯里，会源源不断地冒出"技能级小项目"**。每一个新框架、每一个新数据库、每一个新 SDK、每一个新的垂直领域技能（某种 LLM 评测方法、某种统计方法、某种 UI 模式）都值得用一个小 repo 单独走一遍。
 
-如果你每个都用"非结构化跟教程 + Stack Overflow 搜 + 自我感觉良好地挥手而过"的方式来学，每个要花一周。如果你每个都用同样这五步法、**两天专注**就能吃透，那你的速度就快了好多倍。乘上一整个职业生涯，差距巨大。
+如果你每个都用"非结构化跟教程 + Stack Overflow 搜 + 自我感觉良好地挥手而过"的方式来学，每个要花一周。如果你每个都用同样这六步法、**两天专注**就能吃透，那你的速度就快了好多倍。乘上一整个职业生涯，差距巨大。
 
 我们之所以认真做**第一个**这种小项目（也就是这个关系数据库 repo），就是为了让你把这套动作内化下来。第二个会快一点；第十个会变成自动化反应。**那种自动化反应才是这门课真正要给你的能力。**
 
-### 五步法（先一句话各讲一下，下面会展开）
+### 六步法（先一句话各讲一下，下面会展开）
 
 - **吃透**（Absorb）—— repo 里**有**的东西，全部弄清是什么、为什么这么写。**先做、再理解 How、再理解 Why**。
 - **检验**（Quiz）—— 区分"以为自己懂"和"真懂"，是一个**下限保障**，同时也是一种问答交互模式。
 - **拔高**（Elevate）—— repo 里**没有**但应该有的东西，以及你要做这些升级需要的前置知识。
 - **应对**（Interview）—— 模拟面试官给你 push back，把整个项目当作你自己的作品来答。
 - **展示**（Demo）—— 怎么把这个项目讲给别人听——以及哪些东西**不能**给人看。
+- **发布**（Publish）—— 把这个已经被你吃透并演练过的 repo，转化成你自己 GitHub 上一个干净的**公开作品**。这个 skill 帮你删教学痕迹、生成 commit 清单、co-write 你自己的 README——让发布出去的版本看起来**就是你的项目**，不是教程的复制品。
 
 下面的内容会展开每一步、讲清楚走的顺序——更重要的是，讲清楚**怎么用它们才对**，而不是把每一个 skill 当成"打开来从头跟到尾"。
 
@@ -64,11 +65,11 @@ examples/
 代码量**故意做得很小**。如果是 50 个文件的业务逻辑，你会把全部时间花在"学这个代码"上，反而没空学方法。方法论一定要压过内容。
 
 
-## 第三部分：五个核心动作（这门课的灵魂）
+## 第三部分：六个核心动作（这门课的灵魂）
 
-五个动作分别对应一个 Claude Code 的 slash command —— `/learn-this-project-<名字>` 的形式。每个 skill 加载一小段提示，引导你进入一段对话式的学习流程。**重点：它们不是聊天机器人，也不是"带按钮的文档"。把每一个 skill 想成是一位精通这个 repo 的导师的某一种特定"指导模式"**——你问不同种类的问题，导师会进入不同的模式来回应你。
+六个动作分别对应一个 Claude Code 的 slash command —— `/learn-this-project-<名字>` 的形式。每个 skill 加载一小段提示，引导你进入一段对话式的学习流程。**重点：它们不是聊天机器人，也不是"带按钮的文档"。把每一个 skill 想成是一位精通这个 repo 的导师的某一种特定"指导模式"**——你问不同种类的问题，导师会进入不同的模式来回应你。
 
-下面逐个详细讲。**五个全部读完再去运行任何一个**——你需要先在脑子里有它们如何配合的整体模型。
+下面逐个详细讲。**六个全部读完再去运行任何一个**——你需要先在脑子里有它们如何配合的整体模型。
 
 ### 1. `/learn-this-project-absorb` —— 吃透
 
@@ -123,6 +124,14 @@ Demo 是为这个场景设计的：在面试中、在电话里、在和同事的
 而那个项目，就是这个 repo（更广泛地讲，就是你下一个 learn-this-project repo、再下一个，等等）。Demo skill 教你**如何在不同受众条件下有效地展示这个项目**——怎么挑入口、怎么排"亮点"出现的顺序、跳过哪些、绝对不能给人看哪些。很多学生其实做了好工作，但讲不清楚——内容是有的，框架感不够。Demo 就是把这个框架感补上。
 
 一个重要的副产品：Demo skill 里那张"**绝对不要展示的清单**"（占位 README、scratch 目录、半成品功能等）会**逼你正视**"我这个 repo 里哪些东西能给别人看，哪些会让我显得 junior"的边界。跑一次 demo skill，你对自己 repo 卫生状况的认识会比读十遍代码评审清单还要深。
+
+### 6. `/learn-this-project-publish` —— 发布
+
+这一步是把"我已经学透并演练过的 repo"变成**外部可见的作品**：一个你自己 GitHub 上的干净 public 仓库，读起来就像是你自己的项目。这是整套六步法长线杠杆最高的一步——你完成的每一个 learn-this-project repo 都可以转化成 portfolio piece，多个加起来就是你**系统性学习方法**的可视化证据。
+
+Publish skill 有两个 mode。**Transform mode** 一次性走完整个转换：第一步问你新的 repo 名和你自己的名字（intake）；删掉所有 cardinal 教学痕迹（`docs/learn-this-project/`、`README-cn.md`、生成的五个 sibling skills——但**保留 `learn-this-project-meta/`** 作为 portfolio 加分项）；逐个问你 borderline 文件的去留；生成依赖排序的 commit 清单到 `tmp/publish-commit-plan.md`；用 D-mode 一节一节 co-write 你自己的英文 README（它问你答它写你改）。**Audit mode** 是一个敌意扫描器——假设有面试官在找蛛丝马迹证明这是教程，skill 把文件名、README 措辞、commit message、git tag/branch 里所有的痕迹全揪出来。
+
+两个重要的约束写在前面。**Skill 完全不动 git**——`git add` / `commit` / `push` 全部你自己复制粘贴 commit 清单里的命令跑，所以最后的 commit 历史**真的是你亲手做的**。**Skill 也不会替你创建 GitHub repo**——发布这个动作是你自己的主动行为。其他所有事（删文件、改名、写 README、扫描）都在本地完成，skill 主持流程，你在每一步给同意。
 
 
 ## 第四部分：两类知识，以及 skill 在中间扮演什么角色
@@ -238,9 +247,13 @@ uv run python examples/s11_create_table.py
 
 ### 第五步：Demo
 
-最后一步。跑 `/learn-this-project-demo`，告诉它你想象的受众是谁（**要具体**——"一个数据工程岗的招聘经理，公司规模小"），让 skill 带你过一遍推荐展示流程 + **强制走一遍**"绝对不要展示"清单。最后这张清单是大多数人跳过、但又最需要的——它是"打磨过的 demo"和"无意中暴露我是 intermediate 工程师的 demo"之间的差别。
+跑 `/learn-this-project-demo`，告诉它你想象的受众是谁（**要具体**——"一个数据工程岗的招聘经理，公司规模小"），让 skill 带你过一遍推荐展示流程 + **强制走一遍**"绝对不要展示"清单。最后这张清单是大多数人跳过、但又最需要的——它是"打磨过的 demo"和"无意中暴露我是 intermediate 工程师的 demo"之间的差别。
 
-走完 Demo 你就完成了这套五步法的一个完整循环。下一个 repo 会更快。
+### 第六步：Publish
+
+如果你想把这个 repo 真的变成可以挂简历的 portfolio 作品（你应该想），跑 `/learn-this-project-publish` Transform mode。它从头到尾走完整个转换流程：删教学痕迹、生成 commit 清单、co-write 你自己的英文 README、最后跑一次敌意扫描 audit。走完之后，你会拿到一个干净的本地 repo + 一份 `tmp/publish-commit-plan.md` 复制粘贴清单；你自己在 GitHub 上建 public repo，按清单顺序复制粘贴跑 commits，然后 push。
+
+跑完 Publish 你就完成了这套六步法的一个完整循环——还多出了一个公开的作品可以亮给别人看。下一个 repo 会更快，而这些作品攒在一起就变成你**学习方法**的可视化轨迹。
 
 
 ## 第七部分：展示你的学习成果（长线杠杆）
@@ -266,93 +279,55 @@ uv run python examples/s11_create_table.py
 - 教学型 README 文件（`README.md`、`README-cn.md`——也就是你正在读的这一份）。
 - 导师写的那一套分析文档 `docs/learn-this-project/`。
 - 教程归档 `docs/tutorials/`（如果存在）。
-- 五个生成出来的 skill：`.claude/skills/learn-this-project-{absorb,quiz,elevate,interview,demo}/`。
+- 五个生成出来的 sibling skill：`.claude/skills/learn-this-project-{absorb,quiz,elevate,interview,demo}/`。（**保留 `learn-this-project-meta/`**——这一个是 portfolio 加分项。）
 
 你的 repo 越像一个**真实的、第一人称的、自己探索出来的项目**，信号越强。**这些知识必须存在你脑子里、存在你亲手写的 README 里、存在你带观众走代码的方式里**——不能存在那些一眼就指回教程的产物里。
 
-### 分步技术细节
+### 用 Publish skill —— `/learn-this-project-publish`
 
-#### 第 1 步：clone，不 fork
+上面这套流程现在已经被 **`/learn-this-project-publish`** skill 自动化了。跑 Transform mode，它会按顺序带你走完每一步，每个破坏性动作之前都会停下来征求你的同意。下面列的"机械细节"是**告诉你 skill 到底在做什么、为什么这么做**——读一遍知道是怎么回事，然后让 skill 来主持。
 
-把项目拉到本地。**不要在 GitHub 上 fork** 教程 repo——fork 会留下指回教程的链接，整个"这是我自己的项目"的设定就破了。
+如果你已经自己改过一版了想找人复查，跑同一个 skill 的 **Audit mode**——它会做一次敌意扫描，把所有残留的教学痕迹找出来（文件名、README 措辞、commit message 语气、残留的 `.claude/skills/learn-this-project-*` 目录、可疑的 git tag/branch）。
 
-```bash
-git clone <教程-repo-url> firstname-lastname-relational-database-basic-poc
-cd firstname-lastname-relational-database-basic-poc
-rm -rf .git
-git init
-```
+### Skill 会带你走过的步骤
 
-#### 第 2 步：在 GitHub 上开一个**新的** public repo
+#### 第 1 步：Intake——新 repo 名 + 你自己的名字
 
-仓库名要**有你自己的辨识度**——别照搬教程的名字。常用的模式：
+Skill 第一件事是问你两件事：你要在 GitHub 上建的新 public repo 名（推荐模式 `<姓>-<名>-relational-database-basic-poc`），以及你自己的名字（用在 commit message 和 README 可选的署名里）。这两个变量都拿到才会开始动手。
 
-```
-firstname-lastname-<主题>-poc
-```
+#### 第 2 步：删 cardinal 教学痕迹（skill 自己跑，你同意）
 
-比如：`jane-doe-relational-database-basic-poc`。挑一个个性化的、不要跟同学撞车、不要呼应教程标题。
+Skill 列出找到的所有教学产物——就是上面 cardinal 铁律里那一堆——先打印 dry-run preview，你说"yes"它就直接 `rm -rf`。你**不用自己 `rm`**，skill 帮你做这个机械动作。**Skill 保留 `.claude/skills/learn-this-project-meta/`**，因为这个 meta-skill 是你以后真的可以在新项目上反复用的能力——是 portfolio 加分项，不是露馅项。
 
-#### 第 3 步：**第一次 commit 之前**就把教学产物删干净
+#### 第 3 步：Borderline review（一个文件一个问题）
 
-第一件事，在你 stage 任何东西之前，把所有教程加的东西删掉：
+对于那些**可能是教学痕迹也可能是你自己的工作**的灰色文件（scratch 目录、`tmp/`、`*.bak`、笔记），skill 一个一个问你：保留还是删？你自己拍板。
 
-```bash
-rm README.md README-cn.md README-ORIGINAL.md
-rm -rf docs/learn-this-project/
-rm -rf docs/tutorials/                          # 如果有的话
-rm -rf .claude/skills/learn-this-project-absorb/
-rm -rf .claude/skills/learn-this-project-quiz/
-rm -rf .claude/skills/learn-this-project-elevate/
-rm -rf .claude/skills/learn-this-project-interview/
-rm -rf .claude/skills/learn-this-project-demo/
-```
+#### 第 4 步：生成 commit cheat-sheet 到 `tmp/publish-commit-plan.md`
 
-你**可以保留** `.claude/skills/learn-this-project-meta/`——这个 meta-skill 是真值得你以后在自己项目上反复使用的能力。它是加分项，不是露馅项。
+Skill **完全不跑任何 git 命令**。它做的事情是生成一份编号表，10–15+ 个 commit，按依赖排序（依赖少的先），每条带文件列表、推荐的第一人称 commit message、一句话说明为什么这个 commit 在这个位置。**git 命令是你自己复制粘贴到终端跑的**——所以最后的 commit 历史是你**亲手**跑出来的，不是自动化生成的。
 
-#### 第 4 步：分阶段提交——至少 10–15 个 commit
+这个 repo 的典型 commit 序列长这样：根配置（`mise.toml`、`pyproject.toml`、`.gitignore`）→ 空包骨架 → 共享工具（`examples/utils.py`）→ `examples/README.md` → `s11`–`s15` 每个一个 commit → `s21`–`s25` 每个一个 commit → 你亲手写的 `README.md`。**不要把多个脚本塞进一个 commit**——每个脚本都是一块独立的内容，让每一块有自己的 commit，最后的 commit 历史本身就是一种信号。
 
-**这一步对 repo "看起来怎样"贡献最大**。一个浏览你 commit 历史的人，应该能看到一个**故事**在展开：
+#### 第 5 步：用你自己的语气 co-write README（D-mode）
 
-| 阶段 | Commit（大致）                                                                       |
-| :--- | :----------------------------------------------------------------------------------- |
-| 1    | "Initial mise + uv toolchain setup（`mise.toml`、`pyproject.toml`、`.gitignore`）"   |
-| 2    | "Add empty `learn_this_project/` package skeleton"                                   |
-| 3    | "Add `examples/utils.py` —— 共享 ASCII 表格渲染"                                       |
-| 4    | "Add `examples/README.md` —— 课程引导"                                                 |
-| 5    | "Add `s11_create_table.py` —— 用原生 SQL 写 CREATE TABLE"                              |
-| 6    | "Add `s12_insert_data.py` —— INSERT，引入参数绑定"                                     |
-| 7    | "Add `s13_select_data.py` —— SELECT 系列（WHERE、ORDER、消费方式）"                    |
-| 8    | "Add `s14_update_data.py` —— UPDATE 模式与 `rowcount` 检查"                            |
-| 9    | "Add `s15_delete_data.py` —— DELETE 与 DELETE-vs-DROP"                                |
-| 10   | "Add `s21_create_table.py` —— 同一节课的 SQLAlchemy Core 版本"                         |
-| 11–14| "Add s22 / s23 / s24 / s25 —— Core Expression 版本"                                   |
-| 15   | "Write `README.md` 总结项目与我学到的东西"                                              |
+这是 Publish 流程里**唯一**一个 skill 必须小心处理"作者归属"的地方。Skill 用 **co-write loop**：一节一节地, 问你 2–4 个问题（比如"用一句话说，这个项目是什么？"、"过程中最让你意外的是什么？"），拿你**实际说出来的话**作底，起草那一节并保留你的措辞，给你看然后让你改/确认。Skill **不会**编造你没说过的内容——你的话是源材料。最终 `README.md` 写到 repo 根目录，**英文**，250–500 字之间。
 
-**尽量分散到几天内提交**——commit 日期带有"我用了几天认真做"的暗示。**绝对不要忍不住把多个脚本塞进同一个 commit**。每一个脚本都是这节课的一块，让每一块有自己的 commit。
+#### 第 6 步：最后跑一次敌意扫描 audit
 
-Commit message 用**你自己的语气**写，**过去时**，就像你在加这个文件那天写下的。"Add `s13_select_data.py`" 够用；"Add `s13_select_data.py`，因为……" 更好。
+README 写完后，skill 自动切到 Audit mode，按完整的 hostile-scan rule set 扫一遍刚做完的 repo（文件模式、README 措辞、commit message 语气、git refs、残留目录、卫生项）。findings 分成 🔴 HIGH RISK / 🟡 MEDIUM / 🔵 LOW 三档。**Transform 只有在 HIGH RISK 为 0 时才算真正完成**——或者你显式接受了剩下的 flags。
 
-#### 第 5 步：自己写一份 README
-
-教学产物删完、commit 也分好了，现在**用你自己的语气**写一份新的 `README.md`。三到五段足够：
-
-- 一段：这个项目是什么、覆盖了什么。
-- 一段：怎么装、怎么跑。
-- 一段：你建这个项目带走了什么——**用第一人称反思的语气**，不要变成"教程总结"。
-- 可选：一段写你下一步会加什么（用你自己的话写你的拔高目标）。
-
-确保整份 README 读起来**像*你*写的**。如果你写出来读起来像教程摘要，重写一遍，写得更口语化一点。
+六步全部走完，skill 会打印一份总结清单，告诉你剩下需要**自己在 skill 外做**的事情：去 GitHub 上建 public repo、按 cheat-sheet 复制粘贴 commit 命令、`git remote add origin <url>`、`git push`。
 
 ### "做完了"长什么样
 
 你的 public 仓库最后应该看起来：
 
-- 10–15+ 个分阶段的 commit，用第一人称语气的 message，散布在几天里。
-- 一份**你自己写的**简短 README。
-- 零教学痕迹：没有 `README-cn.md`、没有 `docs/learn-this-project/`、没有 `.claude/skills/learn-this-project-{absorb,quiz,elevate,interview,demo}/`。
+- 10–15+ 个分阶段 commit，第一人称语气的 message。
+- 一份**你和 skill co-write 出来、最终署你名字**的简短 README。
+- 零教学痕迹：没有 `README-cn.md`、没有 `docs/learn-this-project/`、没有 `.claude/skills/learn-this-project-{absorb,quiz,elevate,interview,demo}/`。（`learn-this-project-meta/` 留着是 OK 甚至推荐的。）
 - `mise.toml` + `pyproject.toml` 真的能跑（别人 clone 之后能 `mise install && mise run inst && uv run python examples/s11_create_table.py` 然后成功）。
-- 你能**当场带人走一遍**的代码——意味着你真的读过每一行，不是抄过去就完事了。
+- 你能**当场带人走一遍**的代码——意味着你 Absorb 阶段真的读过每一行，不是抄过去就完事了。
 
 那种综合信号——"这个人会拆问题、会一步一步推进、能产出东西"——就是这门课真正的产品。
 
@@ -361,11 +336,11 @@ Commit message 用**你自己的语气**写，**过去时**，就像你在加这
 
 > 你的导师跟你说几句——慢慢读，比技术细节更重要。
 
-**你真正带走的，不是 SQL。** 是这五个动作的肌肉记忆，是把它们当成一个**系统**而不是"五个独立的脚本"去使用的纪律。
+**你真正带走的，不是 SQL。** 是这六个动作的肌肉记忆，是把它们当成一个**系统**而不是"六个独立的脚本"去使用的纪律。
 
-我选关系数据库做这门课的载体，是因为这个话题简单到不会让你被框架细节淹死。这就把你的注意力释放出来留给元问题——"*我现在为什么在用这个 skill？*"——而那个元问题，才是这门课真正的功课。未来几年里，你会接到几十个、上百个这样的小 repo，每个都是一个技能：一个新的 ORM、一个新的消息队列、一个鉴权库、一个 AI 客户端、一种特定的评测方法、一种特定的统计方法。每一个都值得用同样这套五步法走一遍。**当这套模式自动化了，你获取新技能的速度会比之前快一个数量级。**
+我选关系数据库做这门课的载体，是因为这个话题简单到不会让你被框架细节淹死。这就把你的注意力释放出来留给元问题——"*我现在为什么在用这个 skill？*"——而那个元问题，才是这门课真正的功课。未来几年里，你会接到几十个、上百个这样的小 repo，每个都是一个技能：一个新的 ORM、一个新的消息队列、一个鉴权库、一个 AI 客户端、一种特定的评测方法、一种特定的统计方法。每一个都值得用同样这套六步法走一遍。**当这套模式自动化了，你获取新技能的速度会比之前快一个数量级。**
 
-大多数工程师学新技能的方式是：把一份教程从头到尾读完、做一个 toy 出来、然后跳回生产工作。结果是一个像瑞士奶酪一样到处是洞的认知模型——而你**自己看不见那些洞**。**Absorb + Quiz + Elevate + Interview + Demo 就是为了堵那些洞。** Absorb 让你不漏。Quiz 强迫你面对漏掉的部分。Elevate 让你看到天花板。Interview 用外部压力检验你。Demo 强迫你输出——这是最严苛的理解检验。
+大多数工程师学新技能的方式是：把一份教程从头到尾读完、做一个 toy 出来、然后跳回生产工作。结果是一个像瑞士奶酪一样到处是洞的认知模型——而你**自己看不见那些洞**。**Absorb + Quiz + Elevate + Interview + Demo + Publish 就是为了堵那些洞。** Absorb 让你不漏。Quiz 强迫你面对漏掉的部分。Elevate 让你看到天花板。Interview 用外部压力检验你。Demo 强迫你输出——这是最严苛的理解检验。Publish 把这些已经吸收的内容变成你能带在身上、放到面试里、放到 demo 里、带到下一个职位里的便携作品。
 
 最后给你三条明确的提醒：
 
@@ -375,4 +350,4 @@ Commit message 用**你自己的语气**写，**过去时**，就像你在加这
 
 **不要把 skill 当成一份你要从头跟到尾的脚本。** 把它当成一个随叫随到的导师。你迷路时用它，你卡住时用它，你想做课程没覆盖的东西时用它。**学习的真正工作发生在*你*在跑代码、读文件的时候**——skill 是辅助，不是工作本身。
 
-这套五步法是一个长期投资。你手上这门课是它的**第一次重复**。后面还有很多次。这一次走慢一点、走稳一点，下一次就会快。
+这套六步法是一个长期投资。你手上这门课是它的**第一次重复**。后面还有很多次。这一次走慢一点、走稳一点，下一次就会快。

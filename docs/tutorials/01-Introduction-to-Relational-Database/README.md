@@ -8,7 +8,7 @@
 
 Let me set the tone right up front: **this course is not about relational databases**. The SQL is a vehicle — small enough that even someone with zero CS background can keep up (provided they've finished the earlier "learn with AI" prerequisite course), rich enough to put a complete learning methodology through its paces. What you are actually here to learn is **a repeatable, AI-assisted method for taking any small skill-sized repository and absorbing it completely**.
 
-That distinction matters. If you walk away from this course remembering "`select(users_table).where(...)`", you got 10% of the value. If you walk away with a five-move playbook that you can run on the *next* small repo (a queue library, an auth library, an embedding model client, a new framework, a vertical-domain mini-project), you got the other 90%.
+That distinction matters. If you walk away from this course remembering "`select(users_table).where(...)`", you got 10% of the value. If you walk away with a six-move playbook that you can run on the *next* small repo (a queue library, an auth library, an embedding model client, a new framework, a vertical-domain mini-project), you got the other 90%.
 
 ### Project work vs skill-sized projects
 
@@ -23,17 +23,18 @@ The course you are reading right now is a worked example of the **second** flavo
 
 Here is the part most students under-appreciate when they first start: **the next few years of your career will produce a long stream of skill-sized projects**. Every new framework, every new database, every new SDK, every new vertical-domain technique (a particular kind of LLM evaluation, a particular kind of statistics, a particular kind of UI pattern) deserves its own small-repo treatment.
 
-If each one takes you a week of unstructured tutorial-following + Stack-Overflow-googling + "I think I get it" hand-waving, you will be slow. If each one takes you **two focused days** running the same five-move playbook, you will be fast. Multiply that across a career and the gap is enormous.
+If each one takes you a week of unstructured tutorial-following + Stack-Overflow-googling + "I think I get it" hand-waving, you will be slow. If each one takes you **two focused days** running the same six-move playbook, you will be fast. Multiply that across a career and the gap is enormous.
 
 The whole point of building the *first* one of these (this one, on relational databases) carefully is so that you internalize the moves. The next one will go faster. The tenth one will feel automatic. **That automaticity is the actual skill.**
 
-### The five-move playbook (one-line summary; we'll expand each below)
+### The six-move playbook (one-line summary; we'll expand each below)
 
 - **Absorb** — Everything the repo *contains*. Not just what it does — also *why* it's done that way. **Act first, then understand *how* it works, then understand *why*.**
 - **Quiz** — Drilling that separates "I think I get it" from "I actually get it." A *lower-bound* guarantee, plus a Q&A pattern you can extend.
 - **Elevate** — Everything the repo *doesn't* contain but probably should. Plus the prerequisite knowledge you'd need to add it.
 - **Interview** — Mock-interview pressure on the whole project, with pushback on every answer.
 - **Demo** — How to *present* the project to other humans — and what *not* to show.
+- **Publish** — Turn this absorbed-and-rehearsed repo into a clean public portfolio piece on your own GitHub. The skill deletes teaching artifacts, generates a commit cheat-sheet, and co-writes your README — so the published result reads as *your* project, not a tutorial copy.
 
 The rest of this README explains each move, the order to run them in, and — most importantly — how to use them as tools rather than as scripts to follow blindly.
 
@@ -64,11 +65,11 @@ Stack: Python 3.12 + SQLAlchemy 2.0 (raw SQL via `text(...)` first, then Core Ex
 The codebase is **deliberately small**. If it were 50 files of business logic, you would spend the whole course learning the codebase and miss the playbook. The methodology has to outweigh the content.
 
 
-## Part 3 — The Five Core Actions (the heart of the course)
+## Part 3 — The Six Core Actions (the heart of the course)
 
-Each of the five actions is exposed as a Claude Code slash command — a `/learn-this-project-<name>` skill that loads a small set of instructions and walks you through an interactive session. **Important: these are not chatbots and they are not documents-with-buttons. Think of each one as a specific *coaching mode* that an expert mentor of this project might enter when you ask them a particular kind of question.**
+Each of the six actions is exposed as a Claude Code slash command — a `/learn-this-project-<name>` skill that loads a small set of instructions and walks you through an interactive session. **Important: these are not chatbots and they are not documents-with-buttons. Think of each one as a specific *coaching mode* that an expert mentor of this project might enter when you ask them a particular kind of question.**
 
-We'll go through each in detail. The order matters — read all five before you run any of them, so you have a mental model of how they fit together.
+We'll go through each in detail. The order matters — read all six before you run any of them, so you have a mental model of how they fit together.
 
 ### 1. `/learn-this-project-absorb` — Absorb
 
@@ -121,6 +122,14 @@ Here's the situation Demo is designed for: in an interview, on a call, in a conv
 That project is *this repo* (or, more generally, the next learn-this-project repo, and the one after that, and so on). The Demo skill teaches you how to *present this project effectively under different audience conditions* — how to pick the right entry point, how to sequence the wow moments, what to skip, what to absolutely not show. Many students have done good work but can't structure a presentation of it — the work is there, the framing isn't. Demo fixes the framing.
 
 A consequential side-benefit: the Demo skill's "what NOT to show" list (placeholder READMEs, scratch directories, half-finished features) makes you brutally aware of the boundary between *what's presentable* and *what would make you look junior*. Running the demo skill once will tell you more about your own repo's hygiene than any code-review skim.
+
+### 6. `/learn-this-project-publish` — Publish
+
+This is the move that turns the rehearsed repo into an *external artifact*: a clean public repository on your own GitHub that reads as your own work. It's the long-term-leverage step of the playbook — every learn-this-project repo you complete becomes a portfolio piece, and the collection becomes evidence of a *systematic learning method*.
+
+The skill has two modes. **Transform mode** walks you through the conversion in one session: it asks for your new repo name and your name (intake), deletes the cardinal teaching artifacts (`docs/learn-this-project/`, `README-cn.md`, the five generated sibling skills — but keeps `learn-this-project-meta/` as a portfolio bonus), asks about borderline files one by one, generates a dependency-ordered commit cheat-sheet to `tmp/publish-commit-plan.md`, and co-writes a personal English README in your own voice (D-mode — it asks questions, you answer, it drafts each section, you edit). **Audit mode** is a hostile scanner — assume an interviewer is looking for any sign that this came from a tutorial, and the skill flags every tell across files, README phrasing, commit messages, and git tags/branches.
+
+Two important constraints worth knowing up front. **The skill never touches git** — you do every `git add` / `commit` / `push` yourself by copy-pasting from the cheat-sheet, so the resulting commit history is genuinely yours. **The skill never creates the GitHub repo** — that's your deliberate publication act. Everything else (file deletion, renames, the README, the audit) happens locally with the skill driving and you consenting at each step.
 
 
 ## Part 4 — Two Kinds of Knowledge (and where the skills sit)
@@ -175,7 +184,7 @@ If something breaks, the recovery move is the same as the rest of the course: op
 
 ## Part 6 — The Recommended Learning Path (read this carefully)
 
-This is the most important section of this README. Most students misuse the five skills by treating each one as a single linear "open the skill, follow it end-to-end" session. That is not how to use them, and it produces shallow learning.
+This is the most important section of this README. Most students misuse the six skills by treating each one as a single linear "open the skill, follow it end-to-end" session. That is not how to use them, and it produces shallow learning.
 
 The right model: **the skills are an expert mentor who happens to know this repo cold. You use a mentor differently from how you use a textbook.** You ask the mentor for orientation when you're lost. You ask them for help on a specific problem when you're stuck. You don't dictate-and-record every sentence they say.
 
@@ -234,9 +243,13 @@ Use Interview as the test that decides whether you're ready to put this repo on 
 
 ### Step 5 — Demo
 
-The final step. Run `/learn-this-project-demo`, tell it the audience you're imagining (be specific — "a hiring manager for a data-engineering role at a small company"), and let the skill walk you through the recommended sequence + a forced pass through the "do NOT show" list. This last list is the one most people skip and most need; it's the difference between a polished demo and a demo that broadcasts "I am an intermediate engineer".
+Run `/learn-this-project-demo`, tell it the audience you're imagining (be specific — "a hiring manager for a data-engineering role at a small company"), and let the skill walk you through the recommended sequence + a forced pass through the "do NOT show" list. This last list is the one most people skip and most need; it's the difference between a polished demo and a demo that broadcasts "I am an intermediate engineer".
 
-Once you've done Demo on this repo, you have one full pass of the playbook under your belt. The next repo will go faster.
+### Step 6 — Publish
+
+If you want this repo to become a portfolio artifact you can point at in interviews (and you should), run `/learn-this-project-publish` in Transform mode. It walks the conversion top-to-bottom: deletes the teaching artifacts, generates a commit cheat-sheet, co-writes your README in English, and finishes with a hostile-scan audit. After it's done you'll have a clean local repo plus a commit cheat-sheet in `tmp/publish-commit-plan.md`; you create the public GitHub repo yourself, copy-paste the commits in order, and push.
+
+Once you've done Publish on this repo, you have one full pass of the playbook under your belt — and a public artifact to show for it. The next repo will go faster, and the collection of these artifacts becomes a visible track record of your learning method.
 
 
 ## Part 7 — Show Your Work (the long-term play)
@@ -262,93 +275,55 @@ This means everything teaching-material-shaped must be removed from your public 
 - The teaching README files (`README.md`, `README-cn.md` — the one you're reading now).
 - The mentor's analysis docs under `docs/learn-this-project/`.
 - Any tutorial archive under `docs/tutorials/` if present.
-- The five generated skills under `.claude/skills/learn-this-project-{absorb,quiz,elevate,interview,demo}/`.
+- The five generated sibling skills under `.claude/skills/learn-this-project-{absorb,quiz,elevate,interview,demo}/`. (Keep `learn-this-project-meta/` — that's a portfolio bonus.)
 
 The cleaner your repo looks like a *genuine first-person project*, the stronger the signal. The knowledge needs to live in your head, in your hand-written README, and in the way you walk a viewer through the code — not in artifacts that visibly point back to a course.
 
-### Step-by-step technique
+### Use the Publish skill — `/learn-this-project-publish`
 
-#### 1. Clone, but don't fork
+The whole pipeline above is automated by the **`/learn-this-project-publish`** skill. Run it in Transform mode; it walks you through every step in sequence and stops to ask for consent at each destructive action. The mechanical details below explain *what the skill does* and *why it does each step that way* — read them once so you know what's happening, then let the skill drive.
 
-Pull the project to your local machine. Do not fork the tutorial repo on GitHub — a fork preserves the link back to the source, defeating the whole "this is my own work" framing.
+If you've already converted your repo and want a second pair of eyes, run the same skill in **Audit mode** — it does a hostile scan looking for residual teaching tells (filenames, README phrasing, commit-message tone, residual `.claude/skills/learn-this-project-*` directories, suspicious git tags/branches).
 
-```bash
-git clone <tutorial-repo-url> firstname-lastname-relational-database-basic-poc
-cd firstname-lastname-relational-database-basic-poc
-rm -rf .git
-git init
-```
+### What the skill walks you through
 
-#### 2. Create a NEW public repo on GitHub
+#### 1. Intake — your new repo name and your name
 
-Name it something distinctively yours — avoid the exact tutorial name. A common pattern:
+The skill's first move is to ask for two things: the public repo name you'll create on GitHub (suggested pattern: `<firstname>-<lastname>-relational-database-basic-poc`) and your name for use in commit messages and an optional README byline. Both are required before any work begins.
 
-```
-firstname-lastname-<topic>-poc
-```
+#### 2. Delete cardinal teaching artifacts (skill does this, with your consent)
 
-For example: `jane-doe-relational-database-basic-poc`. Pick something personal, just don't collide with classmates and don't echo the tutorial title.
+The skill lists every teaching artifact it found — exactly the items in the cardinal-rule list above — prints a dry-run preview, and on your yes runs `rm -rf` directly. You do not need to type `rm` yourself; the skill handles the mechanical deletion. **The skill keeps `.claude/skills/learn-this-project-meta/`** because that one represents a meta-skill you can legitimately apply to future projects — it's a portfolio bonus, not a tell.
 
-#### 3. Delete the teaching artifacts BEFORE the first commit
+#### 3. Borderline review (one question per file)
 
-The very first thing you do, before staging anything, is delete everything the tutorial added that's not part of *your* work:
+For files that *might* be teaching material but might also be your own work (scratch dirs, `tmp/`, `*.bak`, notes), the skill asks you one at a time: keep or delete? Your call on each.
 
-```bash
-rm README.md README-cn.md README-ORIGINAL.md
-rm -rf docs/learn-this-project/
-rm -rf docs/tutorials/                          # if present
-rm -rf .claude/skills/learn-this-project-absorb/
-rm -rf .claude/skills/learn-this-project-quiz/
-rm -rf .claude/skills/learn-this-project-elevate/
-rm -rf .claude/skills/learn-this-project-interview/
-rm -rf .claude/skills/learn-this-project-demo/
-```
+#### 4. Generate a commit cheat-sheet to `tmp/publish-commit-plan.md`
 
-You *may* keep `.claude/skills/learn-this-project-meta/` — that one represents a meta-skill you'd genuinely want to apply to future projects. It's a bonus, not a tell.
+The skill **does not run any `git` commands**. Instead it generates a numbered table of 10–15+ commits — dependency-ordered (least-dependent first), each with a file list, a suggested first-person commit message, and a one-sentence rationale. You copy-paste the commands from this file into your terminal yourself, so the resulting commit history is genuinely produced by your fingers, not by an automation.
 
-#### 4. Commit in stages — at least 10–15 commits
+The typical commit sequence for this repo looks like: root config (`mise.toml`, `pyproject.toml`, `.gitignore`) → empty package skeleton → shared utilities (`examples/utils.py`) → `examples/README.md` → each of `s11`–`s15` → each of `s21`–`s25` → your hand-written `README.md`. Resist the urge to combine scripts into one commit; each is its own piece of the lesson, and the resulting history is part of the signal.
 
-This is the part that does the heaviest lifting in your repo's "look". A reader skimming your commit history should see a story unfold:
+#### 5. Co-write your README in your own voice (D-mode)
 
-| Stage | Commit (approximate)                                                                 |
-| :---- | :----------------------------------------------------------------------------------- |
-| 1     | "Initial mise + uv toolchain setup (`mise.toml`, `pyproject.toml`, `.gitignore`)"    |
-| 2     | "Add empty `learn_this_project/` package skeleton"                                   |
-| 3     | "Add `examples/utils.py` — shared ASCII table renderer"                              |
-| 4     | "Add `examples/README.md` — course on-ramp"                                          |
-| 5     | "Add `s11_create_table.py` — CREATE TABLE via raw SQL"                               |
-| 6     | "Add `s12_insert_data.py` — INSERT with bound parameters"                            |
-| 7     | "Add `s13_select_data.py` — SELECT lessons (WHERE, ORDER, consumption styles)"       |
-| 8     | "Add `s14_update_data.py` — UPDATE patterns and `rowcount` checks"                   |
-| 9     | "Add `s15_delete_data.py` — DELETE and DELETE-vs-DROP"                               |
-| 10    | "Add `s21_create_table.py` — same lesson in SQLAlchemy Core"                         |
-| 11–14 | "Add s22 / s23 / s24 / s25 — Core Expression versions"                               |
-| 15    | "Write `README.md` summarizing the project and what I learned"                       |
+This is the only part of Publish where the skill has to be careful about authorship. It uses a **co-write loop**: ask 2–4 prompts about one section (e.g., "In one sentence, what is this project?", "What surprised you most?"), take your answers in your actual words, draft that section in prose that reflects your phrasing, and show you the draft to edit before locking it in. The skill does *not* invent insight you didn't supply — your words are the source. The final `README.md` is written to the repo root, in English, ~250–500 words total.
 
-Spread these across multiple days if possible — the dates on the commits subtly reinforce the "I worked through this carefully" framing. **Resist the urge to lump multiple scripts into a single commit.** Each script is a piece of the lesson; let each piece have its own commit.
+#### 6. Final hostile-scan audit
 
-Write the commit messages in your own voice, in the past tense, as if you wrote them on the day you added the file. "Add `s13_select_data.py`" is fine; "Add `s13_select_data.py` because…" is even better.
+After the README is written, the skill switches into Audit mode automatically and scans the now-transformed repo against the full hostile-scan rule set (file patterns, README phrases, commit-message tone, git refs, residual directories, hygiene). Findings are grouped 🔴 HIGH RISK / 🟡 MEDIUM / 🔵 LOW. Transform is complete only when there are zero HIGH RISK findings — or when you explicitly accept the remaining flags.
 
-#### 5. Write your own README
-
-Once the teaching artifacts are gone and the commits are staged, write a fresh `README.md` *in your own voice*. Three to five paragraphs is plenty:
-
-- One paragraph: what the project is and what it covers.
-- One paragraph: how to install and run it.
-- One paragraph: what you took away from building it — phrased as personal reflection, not lesson recap.
-- Optional: one paragraph on what you'd add next (your own elevation goals, in your own words).
-
-Make sure the README sounds like *you* wrote it. If the prose reads like a tutorial summary, rewrite it more conversationally.
+After all six steps, the skill prints a final summary telling you what's left to do *outside* the skill: create the public GitHub repo, copy-paste the commits from the cheat-sheet, `git remote add origin <url>`, and `git push`.
 
 ### What "done" looks like
 
 Your public repo should look like:
 
-- 10–15+ incremental commits with personal-voice messages, spread over a few days.
-- A short README *you* wrote.
-- Zero teaching artifacts: no `README-cn.md`, no `docs/learn-this-project/`, no `.claude/skills/learn-this-project-{absorb,quiz,elevate,interview,demo}/`.
+- 10–15+ incremental commits with personal-voice messages.
+- A short README *you* co-wrote with the skill in your own voice.
+- Zero teaching artifacts: no `README-cn.md`, no `docs/learn-this-project/`, no `.claude/skills/learn-this-project-{absorb,quiz,elevate,interview,demo}/`. (`learn-this-project-meta/` is fine and even encouraged.)
 - A `mise.toml` + `pyproject.toml` that actually works (someone else can `mise install && mise run inst && uv run python examples/s11_create_table.py` and have it work).
-- Code that you can walk through live — meaning you've actually read every line, not just transcribed it.
+- Code that you can walk through live — meaning you've actually read every line during Absorb, not just transcribed it.
 
 That collective signal — "this person can break problems down, work through them step by step, and produce something at the end" — is the actual product of this course.
 
@@ -357,11 +332,11 @@ That collective signal — "this person can break problems down, work through th
 
 > A note from your mentor — read this slowly. It matters more than any of the technical content.
 
-**The thing you're really walking away with isn't SQL.** It's muscle memory for these five moves and the discipline to apply them as a system, not as separate scripts to follow blindly.
+**The thing you're really walking away with isn't SQL.** It's muscle memory for these six moves and the discipline to apply them as a system, not as separate scripts to follow blindly.
 
-I picked relational databases for this course because the topic is simple enough not to drown you in framework specifics. That leaves attention free for the meta-question — *"why am I using this skill right now?"* — which is the actual lesson. Over the next few years you will inherit dozens of small repos, one per skill: a new ORM, a new queue, an auth library, an AI client, a particular evaluation methodology, a particular kind of statistical method. Every single one deserves this same five-move treatment. **Once the pattern is automatic, your rate of skill acquisition goes up by an order of magnitude.**
+I picked relational databases for this course because the topic is simple enough not to drown you in framework specifics. That leaves attention free for the meta-question — *"why am I using this skill right now?"* — which is the actual lesson. Over the next few years you will inherit dozens of small repos, one per skill: a new ORM, a new queue, an auth library, an AI client, a particular evaluation methodology, a particular kind of statistical method. Every single one deserves this same six-move treatment. **Once the pattern is automatic, your rate of skill acquisition goes up by an order of magnitude.**
 
-Most engineers learn new skills by reading a tutorial start-to-finish, building one toy thing, and jumping back into production work. Result: a Swiss-cheese mental model where they can't tell where the holes are. **Absorb + Quiz + Elevate + Interview + Demo plug those holes.** Absorb makes sure you don't miss anything. Quiz forces you to face what you missed. Elevate shows you the ceiling. Interview tests you against external pressure. Demo forces you to output — which is the ultimate test of understanding.
+Most engineers learn new skills by reading a tutorial start-to-finish, building one toy thing, and jumping back into production work. Result: a Swiss-cheese mental model where they can't tell where the holes are. **Absorb + Quiz + Elevate + Interview + Demo + Publish plug those holes.** Absorb makes sure you don't miss anything. Quiz forces you to face what you missed. Elevate shows you the ceiling. Interview tests you against external pressure. Demo forces you to output — which is the ultimate test of understanding. Publish turns the absorbed work into a portable artifact you can carry into interviews, into demos, into the next role.
 
 Three pieces of explicit guidance before you start:
 
@@ -371,4 +346,4 @@ Three pieces of explicit guidance before you start:
 
 **Don't treat the skill as a script you follow.** Treat it as a mentor on call. Use it when you're lost. Use it when you're stuck. Use it when you want to attempt something the curriculum doesn't cover. The work of learning happens when *you* are running code and reading files — the skill is the helper, not the work.
 
-The five-move playbook is a long-term investment. The course you're holding is the first repetition. There will be many more. Run this one carefully — slowly, even — and the next one will go faster.
+The six-move playbook is a long-term investment. The course you're holding is the first repetition. There will be many more. Run this one carefully — slowly, even — and the next one will go faster.
