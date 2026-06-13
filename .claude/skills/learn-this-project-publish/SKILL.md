@@ -47,13 +47,14 @@ After intake, summarize: "Got it — `<repo name>` by `<student name>`. Let me s
 ### Step 2 — Delete cardinal-rule teaching artifacts
 
 1. Read `docs/learn-this-project/07-publish-checklist.md` § 1 (cardinal-rule deletes).
-2. For each entry, verify it exists in the current repo (use Read / `ls` / Glob).
+2. For each entry, verify it exists in the current repo (use Read / `ls` / Glob). If an entry is a glob pattern (e.g., `**/README-cn.md`), expand it via Glob and list every actual match individually in the dry-run — do not collapse them into the pattern, since the user needs to see exactly what will be deleted.
 3. Print a **dry-run preview** as one combined `ls`-style block, showing every file/directory that would be deleted. Example:
 
    ```
    The following will be deleted:
 
      README-cn.md
+     examples/01-crud-two-styles/README-cn.md
      README-ORIGINAL.md
      README.md            (will be rewritten in Step 6)
      TICKET.md
@@ -101,10 +102,10 @@ After intake, summarize: "Got it — `<repo name>` by `<student name>`. Let me s
    - C1: `.gitignore`
    - C2: `mise.toml` + `pyproject.toml` (toolchain config)
    - C3–C4: optional `CLAUDE.md`, empty package skeleton (if kept)
-   - C5: `examples/utils.py` (shared dependency)
-   - C6–C10: `examples/s11..s15_*.py` (raw-SQL series, one each)
-   - C11–C15: `examples/s21..s25_*.py` (Core Expression series, one each)
-   - C16 (optional): `examples/README.md`
+   - C5: `examples/01-crud-two-styles/utils.py` (shared dependency)
+   - C6–C10: `examples/01-crud-two-styles/s11..s15_*.py` (raw-SQL series, one each)
+   - C11–C15: `examples/01-crud-two-styles/s21..s25_*.py` (Core Expression series, one each)
+   - C16 (optional): `examples/01-crud-two-styles/README.md`
    - C17: hand-written `README.md` (from Step 6)
 3. **Ask the user before writing**: "Want me to write the commit cheat-sheet to `tmp/publish-commit-plan.md`? You'll copy-paste from it; I won't run any `git` commands."
 4. On yes, write the file. Format as a numbered list with explicit `git add` / `git commit -m "..."` commands:
@@ -184,7 +185,7 @@ Assume the reader is a hostile interviewer scanning the repo with the question "
    - **Git ref flags**: `git tag --list` and `git branch --all`. Match against the suspicious-name patterns.
    - **Residual directory flags**: Glob `.claude/skills/learn-this-project-*` and confirm only `learn-this-project-meta` survives (if at all).
    - **Hygiene flags**: Glob for `.idea/`, `__pycache__/`, `.venv/`, `*.egg-info/`, `.DS_Store`.
-   - **Suspicious symmetry flags**: heuristic — look for identical comment banners across multiple files, identical docstring shapes, or other "obviously templated" patterns. NOTE: the `examples/s1x` and `s2x` series in this repo are designed to mirror each other; flag as heuristic only.
+   - **Suspicious symmetry flags**: heuristic — look for identical comment banners across multiple files, identical docstring shapes, or other "obviously templated" patterns. NOTE: the `examples/01-crud-two-styles/s1x` and `s2x` series in this repo are designed to mirror each other; flag as heuristic only.
 3. Group findings by severity:
 
    ```

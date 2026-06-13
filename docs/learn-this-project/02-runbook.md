@@ -7,7 +7,7 @@ Edit this file directly when you spot inaccuracies. Re-run the meta-skill with
 
 # 02 — Runbook
 
-> **Scope notes (set at meta-skill bootstrap).** All runnable code is `examples/sNN_*.py` — ten scripts in two parallel series (`s11_*`–`s15_*` for the raw-SQL lessons, `s21_*`–`s25_*` for the Core Expression lessons), plus a shared `utils.py`. There is no app server, CLI, or test suite. "Run the project" means "execute one of the example scripts and read the output." Read `examples/README.md` first for the rationale and reading order.
+> **Scope notes (set at meta-skill bootstrap).** All runnable code is `examples/01-crud-two-styles/sNN_*.py` — ten scripts in two parallel series (`s11_*`–`s15_*` for the raw-SQL lessons, `s21_*`–`s25_*` for the Core Expression lessons), plus a shared `utils.py`. There is no app server, CLI, or test suite. "Run the project" means "execute one of the example scripts and read the output." Read `examples/01-crud-two-styles/README.md` first for the rationale and reading order.
 
 ## Prerequisites
 
@@ -49,32 +49,32 @@ After step 4, `.venv/` contains a working environment and `learn_this_project.eg
 | Create the virtualenv                 | `mise run venv-create` (= `uv venv`)          | Idempotent; safe to re-run. Creates `.venv/`.                                      |
 | Install / sync dependencies           | `mise run inst` (= `uv sync --all-extras`)    | Run after every `pyproject.toml` change.                                           |
 | **Wipe** the virtualenv               | `mise run venv-remove` (= `rm -r .venv`)      | Destructive but cheap — recreate with `venv-create` + `inst`.                      |
-| Run an example script                 | `uv run python examples/sNN_*.py`             | `uv run` ensures the project's `.venv` is used regardless of shell activation.     |
-| Activate the venv (manual)            | `source .venv/bin/activate`                   | After this, plain `python examples/...` also works.                                |
+| Run an example script                 | `uv run python examples/01-crud-two-styles/sNN_*.py` | `uv run` ensures the project's `.venv` is used regardless of shell activation.     |
+| Activate the venv (manual)            | `source .venv/bin/activate`                   | After this, plain `python examples/01-crud-two-styles/...` also works.             |
 | Inspect dependency lockfile           | `cat uv.lock`                                 | Records exact resolved versions.                                                   |
 
 There are no `make`, `npm`, or `pytest` targets — none of those tools are in scope for this project.
 
 ## Running the lessons
 
-Each example script is independent. Read `examples/README.md` first for the rationale, then run the two series in order. Series 1 (raw SQL via `text(...)`):
+Each example script is independent. Read `examples/01-crud-two-styles/README.md` first for the rationale, then run the two series in order. Series 1 (raw SQL via `text(...)`):
 
 ```bash
-uv run python examples/s11_create_table.py
-uv run python examples/s12_insert_data.py
-uv run python examples/s13_select_data.py
-uv run python examples/s14_update_data.py
-uv run python examples/s15_delete_data.py
+uv run python examples/01-crud-two-styles/s11_create_table.py
+uv run python examples/01-crud-two-styles/s12_insert_data.py
+uv run python examples/01-crud-two-styles/s13_select_data.py
+uv run python examples/01-crud-two-styles/s14_update_data.py
+uv run python examples/01-crud-two-styles/s15_delete_data.py
 ```
 
 Series 2 (SQLAlchemy Core Expression — same SQL topics, Pythonic API):
 
 ```bash
-uv run python examples/s21_create_table.py
-uv run python examples/s22_insert_data.py
-uv run python examples/s23_select_data.py
-uv run python examples/s24_update_data.py
-uv run python examples/s25_delete_data.py
+uv run python examples/01-crud-two-styles/s21_create_table.py
+uv run python examples/01-crud-two-styles/s22_insert_data.py
+uv run python examples/01-crud-two-styles/s23_select_data.py
+uv run python examples/01-crud-two-styles/s24_update_data.py
+uv run python examples/01-crud-two-styles/s25_delete_data.py
 ```
 
 What you'll see, per script:
@@ -90,7 +90,7 @@ There is no port to open, no URL, no daemon. The scripts run, print, exit. The i
 There is no test suite in this repo. The "test" is **read the script, run it, and compare the printed SQL + tables to your expectation**. If you want to verify a script after editing it, the simplest reproducible check is:
 
 ```bash
-uv run python examples/sNN_*.py | tail -40
+uv run python examples/01-crud-two-styles/sNN_*.py | tail -40
 ```
 
 …and confirm the final ASCII table matches what you expected.
@@ -102,7 +102,7 @@ uv run python examples/sNN_*.py | tail -40
 | Symptom                                                                            | Likely cause                                                                                              | Fix                                                                                                              |
 | :--------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------- |
 | `ModuleNotFoundError: No module named 'sqlalchemy'`                                | Virtualenv not activated, or `mise run inst` was never run.                                              | `mise run inst`, then `uv run python ...` (avoids needing manual activation).                                    |
-| `ModuleNotFoundError: No module named 'utils'` when running an example             | Running the script from a directory other than `examples/`. Imports are sibling-file imports.            | `cd` into the repo root and use `uv run python examples/sNN_*.py` — the script's own directory is added to `sys.path` automatically. |
+| `ModuleNotFoundError: No module named 'utils'` when running an example             | Running the script from a directory other than `examples/01-crud-two-styles/`. Imports are sibling-file imports. | `cd` into the repo root and use `uv run python examples/01-crud-two-styles/sNN_*.py` — the script's own directory is added to `sys.path` automatically. |
 | `sqlite3.IntegrityError: UNIQUE constraint failed: users.email`                    | You modified a seed and reused an email already present.                                                  | Use distinct emails — `email` has `unique=True`.                                                                 |
 | `sqlite3.IntegrityError: NOT NULL constraint failed: users.name`                   | You inserted a row without a `name`.                                                                      | `name` is `nullable=False`. Provide one, or relax the column definition (not recommended for a teaching repo).    |
 | Output is **just** SQL with no ASCII tables                                        | A `print_table(...)` call was removed or the script exited early via an exception.                       | Re-read the script around the last printed line; check `echo=True`'s last `INFO` line for the offending statement. |
@@ -114,7 +114,7 @@ uv run python examples/sNN_*.py | tail -40
 ## Where to look when something breaks
 
 - **The full generated SQL.** Every script in the s2x series runs with `echo=True`; the SQLAlchemy engine prints every statement to stderr/stdout. Scroll up from the error to find the last successful statement — the next one is usually where the bug is. (s1x scripts don't echo because the SQL is already visible as a `text(...)` literal in the source.)
-- **The relevant script's docstring** (`s11_create_table.py:1–45` and `s21_create_table.py:1–31` are the canonical examples — one per series) — it states the *intent* of every step, so a divergence between intent and behavior tells you which assumption broke.
+- **The relevant script's docstring** (`examples/01-crud-two-styles/s11_create_table.py:1–45` and `examples/01-crud-two-styles/s21_create_table.py:1–31` are the canonical examples — one per series) — it states the *intent* of every step, so a divergence between intent and behavior tells you which assumption broke.
 - **`uv.lock`.** If the same script behaves differently on two machines, compare the resolved SQLAlchemy / prettytable versions there.
 - **`pyproject.toml` and `mise.toml`** — the source of truth for Python version + deps. If `python --version` doesn't say 3.12, your environment isn't using `mise`'s Python.
 - **No log files, no dashboards.** Everything is stdout/stderr from the script process.

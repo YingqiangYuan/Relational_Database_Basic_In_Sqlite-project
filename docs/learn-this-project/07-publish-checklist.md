@@ -13,9 +13,13 @@ Edit this file directly when you spot inaccuracies. Re-run the meta-skill with
 
 Every entry here universally signals "this came from a tutorial" and must be removed before publishing. The publish skill prints all of these as one dry-run preview, then on user consent runs `rm -rf` for each.
 
-- path: `README-cn.md`
-  reason: Chinese teaching README — long-form course prose; the dead giveaway for a tutorial origin.
-  detected_by: filename match (`README-cn.md`) AND content scan ("课程", "教程", "我们将学习" or any first-person-plural learning prose).
+- path: `**/README-cn.md` (recursive glob — Locale READMEs)
+  reason: Chinese teaching READMEs — long-form course prose at any depth. Locale READMEs are the dead giveaway for a tutorial origin AND for a multi-language tutorial publication. The cardinal rule is they always get deleted regardless of where they sit in the tree. The publish skill must expand this glob via Glob, list every hit individually in the dry-run, and `rm` each one.
+  detected_by: glob match `**/README-cn.md`.
+  current_hits (at bootstrap time; re-scan to be sure):
+    - `README-cn.md` (root — long-form course prose)
+    - `examples/01-crud-two-styles/README-cn.md` (lesson-folder Chinese tutorial)
+    - `docs/tutorials/01-Introduction-to-Relational-Database/README-cn.md` (already covered by the `docs/tutorials/` directory-level delete below, but listed here for completeness)
 
 - path: `README-ORIGINAL.md`
   reason: Pointer to the original tutorial repo; existence alone proves derivative origin.
@@ -85,12 +89,12 @@ Scan of this specific repo for content that isn't unambiguously teaching but mig
   reason: Lock file. Some projects keep it (reproducibility); some omit (binary diffs). User's call.
   default: keep
 
-- path: `examples/__pycache__/`
+- path: `examples/01-crud-two-styles/__pycache__/`
   reason: Python bytecode cache. Should be in `.gitignore`, not the repo.
   default: delete
 
 - path: `learn_this_project/__init__.py`
-  reason: Empty package stub. The skill should ask the user whether to (a) leave it for setuptools discovery as-is, (b) populate it with shared helpers extracted from `examples/utils.py`, or (c) remove the empty package and drop the corresponding setuptools `find` block in `pyproject.toml`.
+  reason: Empty package stub. The skill should ask the user whether to (a) leave it for setuptools discovery as-is, (b) populate it with shared helpers extracted from `examples/01-crud-two-styles/utils.py`, or (c) remove the empty package and drop the corresponding setuptools `find` block in `pyproject.toml`.
   default: ask
 
 - path: `CLAUDE.md`
@@ -101,8 +105,8 @@ Scan of this specific repo for content that isn't unambiguously teaching but mig
   reason: JetBrains IDE config. Often committed, often not. Hostile reader treats it as hygiene, not teaching-signal — but ugly either way.
   default: ask
 
-- path: `examples/README.md`
-  reason: The on-ramp doc inside `examples/`. Check content scan — if it reads as instructor-to-student prose ("In this lesson…"), borderline; if it reads as a peer-developer doc ("Run `python examples/sNN_*.py` to see…"), keep.
+- path: `examples/01-crud-two-styles/README.md`
+  reason: The on-ramp doc inside `examples/01-crud-two-styles/`. Check content scan — if it reads as instructor-to-student prose ("In this lesson…"), borderline; if it reads as a peer-developer doc ("Run `python examples/01-crud-two-styles/sNN_*.py` to see…"), keep.
   default: ask
 
 ## § 3 — Dependency-ordered commit plan template
@@ -115,23 +119,23 @@ The principle: **commit files in dependency order — least-dependent first**, s
 | 2  | `mise.toml`, `pyproject.toml`                      | "Add mise + uv toolchain setup"                                     | Root toolchain config; both files declare what Python version and dependencies the rest of the repo expects.    |
 | 3  | `CLAUDE.md`                                        | "Document toolchain commands for AI agents"                         | (Optional — only if the user keeps `CLAUDE.md`.) Documents the same commands as the README for AI tooling.      |
 | 4  | `learn_this_project/__init__.py`                   | "Add empty package skeleton for setuptools discovery"               | (Only if user keeps the empty package.) Required so setuptools' `find` block doesn't fail.                      |
-| 5  | `examples/utils.py`                                | "Add print_table helper for example scripts"                        | The shared dependency for every example script. Land it before any script that imports it.                      |
-| 6  | `examples/s11_create_table.py`                     | "Add raw SQL CREATE TABLE example"                                  | First of the s1x raw-SQL series; smallest, fully self-contained, no dependency on later scripts.                |
-| 7  | `examples/s12_insert_data.py`                      | "Add raw SQL INSERT example"                                        | Second s1x lesson; extends the CREATE TABLE pattern with explicit `text(...)` parameter binding.                |
-| 8  | `examples/s13_select_data.py`                      | "Add raw SQL SELECT example"                                        | Third s1x lesson; demonstrates result-row iteration on top of the same in-memory pattern.                       |
-| 9  | `examples/s14_update_data.py`                      | "Add raw SQL UPDATE example"                                        | Fourth s1x lesson; introduces `rowcount` semantics for write operations.                                        |
-| 10 | `examples/s15_delete_data.py`                      | "Add raw SQL DELETE example"                                        | Fifth s1x lesson; rounds out the CRUD coverage with `text(...)` parameter binding for DELETE.                   |
-| 11 | `examples/s21_create_table.py`                     | "Add Core Expression CREATE TABLE example"                          | First of the s2x series; mirrors s11 but with `MetaData`/`Table(...)` constructors instead of raw SQL strings.  |
-| 12 | `examples/s22_insert_data.py`                      | "Add Core Expression INSERT example"                                | Second s2x lesson; uses the `insert(table).values(...)` constructor.                                            |
-| 13 | `examples/s23_select_data.py`                      | "Add Core Expression SELECT example"                                | Third s2x lesson; uses `select(table).where(...)` constructor.                                                  |
-| 14 | `examples/s24_update_data.py`                      | "Add Core Expression UPDATE example"                                | Fourth s2x lesson; uses the `update(table).where(...).values(...)` constructor.                                 |
-| 15 | `examples/s25_delete_data.py`                      | "Add Core Expression DELETE example"                                | Fifth s2x lesson; uses the `delete(table).where(...)` constructor; final s2x lesson.                            |
-| 16 | `examples/README.md`                               | "Add on-ramp doc for the examples directory"                        | (Only if user keeps `examples/README.md`.) The doc orients a new reader after the scripts exist.                |
+| 5  | `examples/01-crud-two-styles/utils.py`             | "Add print_table helper for example scripts"                        | The shared dependency for every example script. Land it before any script that imports it.                      |
+| 6  | `examples/01-crud-two-styles/s11_create_table.py`  | "Add raw SQL CREATE TABLE example"                                  | First of the s1x raw-SQL series; smallest, fully self-contained, no dependency on later scripts.                |
+| 7  | `examples/01-crud-two-styles/s12_insert_data.py`   | "Add raw SQL INSERT example"                                        | Second s1x lesson; extends the CREATE TABLE pattern with explicit `text(...)` parameter binding.                |
+| 8  | `examples/01-crud-two-styles/s13_select_data.py`   | "Add raw SQL SELECT example"                                        | Third s1x lesson; demonstrates result-row iteration on top of the same in-memory pattern.                       |
+| 9  | `examples/01-crud-two-styles/s14_update_data.py`   | "Add raw SQL UPDATE example"                                        | Fourth s1x lesson; introduces `rowcount` semantics for write operations.                                        |
+| 10 | `examples/01-crud-two-styles/s15_delete_data.py`   | "Add raw SQL DELETE example"                                        | Fifth s1x lesson; rounds out the CRUD coverage with `text(...)` parameter binding for DELETE.                   |
+| 11 | `examples/01-crud-two-styles/s21_create_table.py`  | "Add Core Expression CREATE TABLE example"                          | First of the s2x series; mirrors s11 but with `MetaData`/`Table(...)` constructors instead of raw SQL strings.  |
+| 12 | `examples/01-crud-two-styles/s22_insert_data.py`   | "Add Core Expression INSERT example"                                | Second s2x lesson; uses the `insert(table).values(...)` constructor.                                            |
+| 13 | `examples/01-crud-two-styles/s23_select_data.py`   | "Add Core Expression SELECT example"                                | Third s2x lesson; uses `select(table).where(...)` constructor.                                                  |
+| 14 | `examples/01-crud-two-styles/s24_update_data.py`   | "Add Core Expression UPDATE example"                                | Fourth s2x lesson; uses the `update(table).where(...).values(...)` constructor.                                 |
+| 15 | `examples/01-crud-two-styles/s25_delete_data.py`   | "Add Core Expression DELETE example"                                | Fifth s2x lesson; uses the `delete(table).where(...)` constructor; final s2x lesson.                            |
+| 16 | `examples/01-crud-two-styles/README.md`            | "Add on-ramp doc for the examples directory"                        | (Only if user keeps `examples/01-crud-two-styles/README.md`.) The doc orients a new reader after the scripts exist.                |
 | 17 | `README.md`                                        | "Add project README"                                                | Last commit — the personal README written via Step 6 co-write, English only, in the user's voice.               |
 
 Notes for the skill:
 
-- If the user **does not keep** `examples/README.md` or `CLAUDE.md` or the empty package, drop those rows and shift the numbering.
+- If the user **does not keep** `examples/01-crud-two-styles/README.md` or `CLAUDE.md` or the empty package, drop those rows and shift the numbering.
 - If the user **renames** `learn_this_project/` (e.g. to match the new repo name), apply the rename before commit 4; the commit message for that file should reflect the new name (e.g. "Add empty `pgwarmup/` package skeleton").
 - The `.claude/skills/learn-this-project-meta/` directory should be its own commit, near the end, with a message like "Add meta-skill that bootstrapped this project's learning workflow" — sells it as a portfolio bonus. The publish skill should ask the user whether to include it as a commit before the final README commit.
 
@@ -189,7 +193,8 @@ The Audit assumes a hostile reader is scanning the repo with the question "did t
 ### 🔴 HIGH RISK — fatal on detection
 
 - **File-pattern flags.** Any of the following present is fatal:
-  - `README-*.md` (any non-root README other than `README.md` itself)
+  - `**/README-cn.md` and other locale-suffix READMEs at any depth (the root `README.md` is the only legitimate README — every `README-<something>.md` anywhere in the tree is a flag, regardless of folder)
+  - `README-ORIGINAL.md`
   - `*-tutorial.*`, `*-course.*`
   - `docs/learn-this-project/` or `docs/learn-*/`
   - `docs/tutorials/` or any `docs/tutorial*` directory
@@ -211,7 +216,7 @@ The Audit assumes a hostile reader is scanning the repo with the question "did t
 - **Git ref flags.** Tags or branches whose names hint at the tutorial source:
   - `tutorial-base`, `from-tutorial`, `original`, `v0-from-course`, `course-start`, `lesson-*`
   - Detected by `git tag --list` + `git branch --all`.
-- **Suspicious symmetry flags.** Identical comment banners across multiple files, identical docstring shapes (e.g., all ten `examples/s*.py` opening with the same 6-line block), or "obviously templated" boilerplate — a hostile reader spots this. The `examples/` directory in this specific repo has high symmetry by design (s1x mirrors s2x); flag it as a heuristic only, not a hard rule.
+- **Suspicious symmetry flags.** Identical comment banners across multiple files, identical docstring shapes (e.g., all ten `examples/01-crud-two-styles/s*.py` opening with the same 6-line block), or "obviously templated" boilerplate — a hostile reader spots this. The `examples/01-crud-two-styles/` directory in this specific repo has high symmetry by design (s1x mirrors s2x); flag it as a heuristic only, not a hard rule.
 - **Hygiene-but-visible flags.**
   - `.idea/`, `__pycache__/`, `.venv/`, `*.egg-info/` committed.
   - `learn_this_project.egg-info/` specifically — this repo has it tracked; remove before publishing.

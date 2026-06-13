@@ -12,7 +12,7 @@ Edit this file directly when you spot inaccuracies. Re-run the meta-skill with
 ## Executive view (highest leverage first)
 
 1. **Add a runnable test that imports + executes each example script.** Single fixture, no pytest plugin sprawl. Catches the "I edited s13 / s23 and forgot to re-run the matching sibling" class of regression — especially important now that there are two parallel series that must stay in sync.
-2. **Add a real top-level `README.md`.** `examples/README.md` already exists and does the on-ramp work, but the repo-root README is still a single header — a reader landing from GitHub cannot tell what they're looking at.
+2. **Add a real top-level `README.md`.** `examples/01-crud-two-styles/README.md` already exists and does the on-ramp work, but the repo-root README is still a single header — a reader landing from GitHub cannot tell what they're looking at.
 3. **Introduce SQLAlchemy ORM (declarative_base + Session) as a third series `s31`–`s35`.** Same `users` table, same operations, ORM style — so the learner sees the *same lesson three times* (raw SQL → Core → ORM), each layer revealing why the next one exists.
 4. **Add an `s30_setup_file.py` (or extend the runbook) showing file-based SQLite + persistence across runs.** `:memory:` is great for the lesson but hides one of the most important real-world questions: where does the data go between runs?
 5. **Add foreign keys + a second table (`posts` referencing `users`).** Single-table CRUD is a half-truth; relational means relationships, and a learner who only sees one table will struggle the moment they meet a JOIN.
@@ -22,7 +22,7 @@ Edit this file directly when you spot inaccuracies. Re-run the meta-skill with
 ### Test depth and coverage
 
 - **Current state.** No test directory; no `pytest` config; no CI. The only "test" is "did the script print what I expected when I ran it." (`02-runbook.md` says this explicitly.)
-- **Senior-engineer target state.** A `tests/` directory with one `test_examples.py` that subprocess-invokes each `examples/sNN_*.py` and asserts exit code 0 and that the stdout contains the expected ASCII-table headers (e.g., `--- All rows ---`, `--- Top 2 oldest users ---`). Wired into a GitHub Actions workflow that runs `mise install && mise run inst && pytest -q` on push.
+- **Senior-engineer target state.** A `tests/` directory with one `test_examples.py` that subprocess-invokes each `examples/01-crud-two-styles/sNN_*.py` and asserts exit code 0 and that the stdout contains the expected ASCII-table headers (e.g., `--- All rows ---`, `--- Top 2 oldest users ---`). Wired into a GitHub Actions workflow that runs `mise install && mise run inst && pytest -q` on push.
 - **Alternatives considered.**
   - **A: subprocess-based smoke tests (above).** Pro: tests the script as a learner would actually run it. Con: catches "did anything print?" but not "did the right rows print." Tradeoff: low maintenance, low specificity.
   - **B: refactor each script to expose a `main()` and import-test the rendered output as a string.** Pro: precise assertions on output text. Con: forces every example into a function shape that's worse pedagogically (script-as-narrative is the current strength). Tradeoff: better signal, worse teaching code.
@@ -32,8 +32,8 @@ Edit this file directly when you spot inaccuracies. Re-run the meta-skill with
 
 ### Documentation and onboarding
 
-- **Current state.** Top-level `README.md` and `README-ORIGINAL.md` each contain only `# learn_relational_database_basic_in_sqlite-project`. `CLAUDE.md` documents the toolchain for Claude but not for a human reader. **`examples/README.md` does exist** and is substantial — it explains why Python scripts, why SQLite, why SQLAlchemy, and the two-series structure. The remaining gap is the *repo-root* README that a reader sees on GitHub before they even open `examples/`.
-- **Senior-engineer target state.** A repo-root `README.md` that, in this order: (1) one-paragraph pitch ("a Python learner's introduction to relational databases via SQLAlchemy on SQLite — ten worked examples in two parallel series teaching raw SQL then Core Expression"); (2) prerequisites and 4-line install; (3) a numbered list linking to `examples/README.md` for the on-ramp and to each script for the lesson it teaches; (4) "what you'll learn" outcomes list; (5) where to go next (ORM, file-backed SQLite, multi-table). Optionally a `docs/` index.
+- **Current state.** Top-level `README.md` and `README-ORIGINAL.md` each contain only `# learn_relational_database_basic_in_sqlite-project`. `CLAUDE.md` documents the toolchain for Claude but not for a human reader. **`examples/01-crud-two-styles/README.md` does exist** and is substantial — it explains why Python scripts, why SQLite, why SQLAlchemy, and the two-series structure. The remaining gap is the *repo-root* README that a reader sees on GitHub before they even open `examples/01-crud-two-styles/`.
+- **Senior-engineer target state.** A repo-root `README.md` that, in this order: (1) one-paragraph pitch ("a Python learner's introduction to relational databases via SQLAlchemy on SQLite — ten worked examples in two parallel series teaching raw SQL then Core Expression"); (2) prerequisites and 4-line install; (3) a numbered list linking to `examples/01-crud-two-styles/README.md` for the on-ramp and to each script for the lesson it teaches; (4) "what you'll learn" outcomes list; (5) where to go next (ORM, file-backed SQLite, multi-table). Optionally a `docs/` index.
 - **Alternatives considered.**
   - **A: rich README with embedded sample output and a small architecture diagram.** Pro: portfolio-quality. Con: drift risk — sample output ages with code changes.
   - **B: README is the index, narrative lives in `docs/lessons/sNN.md`.** Pro: lets each lesson have prose alongside code. Con: doubles the writing load and the drift surface.
@@ -44,18 +44,18 @@ Edit this file directly when you spot inaccuracies. Re-run the meta-skill with
 ### API / contract design (= teaching API)
 
 - **Current state.** Each script redefines the schema (engine, raw `CREATE TABLE` text or MetaData+Table) at the top — ~25 lines of repeated setup before the lesson begins. This is *deliberate* non-DRY for pedagogy: the learner re-sees the same shape ten times (across both the s1x and s2x series). But once a learner has internalized the setup, the repetition becomes noise and obscures the lesson. The s1x → s2x split already gives the learner one "second-pass" demonstration of the same lesson at a different abstraction level.
-- **Senior-engineer target state.** A third-pass ORM series under `examples/s31_*.py` … `s35_*.py` that imports a shared `schema.py` and `engine.py` from `learn_this_project/`. The original s1x and s2x stay as the "first reads." This gives the learner three abstraction levels (raw SQL → Core Expression → ORM with shared module), each layer making a different teaching point.
+- **Senior-engineer target state.** A third-pass ORM series under `examples/01-crud-two-styles/s31_*.py` … `s35_*.py` that imports a shared `schema.py` and `engine.py` from `learn_this_project/`. The original s1x and s2x stay as the "first reads." This gives the learner three abstraction levels (raw SQL → Core Expression → ORM with shared module), each layer making a different teaching point.
 - **Alternatives considered.**
   - **A: single shared module from day one.** Pro: clean code. Con: defeats the pedagogical reason for repetition. Bad tradeoff for *this* project.
   - **B: keep s1x and s2x as-is, add ORM-based `s31`–`s35` that ALSO redefines setup inline (same pedagogical pattern).** Pro: consistent learning model across all three series. Con: no shared-module lesson at all. Reasonable.
   - **C: add a `learn_this_project.schema` module and have the original scripts continue to redefine inline (so `schema.py` is for the curious learner, not for the lessons).** Pro: zero disruption. Con: the package gets used only if the learner browses `learn_this_project/`. Status-quo-ish.
-- **Knowledge prerequisites.** Python packaging basics (relative imports, why `examples/` isn't packaged); when DRY helps and when it hurts.
+- **Knowledge prerequisites.** Python packaging basics (relative imports, why `examples/01-crud-two-styles/` isn't packaged); when DRY helps and when it hurts.
 - **Suggested learning path.** (1) Read SQLAlchemy 2.0 ORM tutorial → (2) write `learn_this_project/schema.py` defining the same `users` table → (3) duplicate `s22–s25` into `s32_*.py`–`s35_*.py` (plus `s31_*.py` to set up the engine + session) using `DeclarativeBase`, `Mapped`, and `Session`; compare line-for-line against the Core versions.
 
 ### Data layer (relationships, migrations, persistence)
 
 - **Current state.** One table (`users`). All databases are `:memory:` — data vanishes per process. No migrations.
-- **Senior-engineer target state.** (a) Add `posts` table with `author_id INTEGER REFERENCES users(id)`, demonstrating one-to-many with INSERT, SELECT-with-JOIN, and ON DELETE CASCADE behavior — taught in both s1x and s2x style as `s16`/`s17`/`s18`-style follow-ons and `s26`/`s27`/`s28`. (b) Add `s30_setup_file.py` showing `sqlite:///./data/learning.db` and what happens on re-runs (the data is still there). (c) Optionally a `s99_migrations.py` introducing Alembic in the simplest possible way (one revision adding a column).
+- **Senior-engineer target state.** (a) Add `posts` table with `author_id INTEGER REFERENCES users(id)`, demonstrating one-to-many with INSERT, SELECT-with-JOIN, and ON DELETE CASCADE behavior — taught in both s1x and s2x style as `s16`/`s17`/`s18`-style follow-ons and `s26`/`s27`/`s28`. (b) Add `examples/01-crud-two-styles/s30_setup_file.py` showing `sqlite:///./data/learning.db` and what happens on re-runs (the data is still there). (c) Optionally a `examples/01-crud-two-styles/s99_migrations.py` introducing Alembic in the simplest possible way (one revision adding a column).
 - **Alternatives considered.**
   - **A: SQLite + raw migrations (hand-written DDL files).** Pro: dialect-agnostic, simpler than Alembic for one revision. Con: doesn't transfer to real-world workflows where Alembic is the norm.
   - **B: Alembic from day one.** Pro: real-world. Con: heavy concept (env.py, versions/, branches) for a beginner repo.
@@ -65,7 +65,7 @@ Edit this file directly when you spot inaccuracies. Re-run the meta-skill with
 
 ### Developer experience (DX)
 
-- **Current state.** No `mise run` task to execute the lessons. To run `s11`, you type `uv run python examples/s11_create_table.py`. There's no `make all`, no `mise run lesson 13`. No `.envrc`, no auto-activation.
+- **Current state.** No `mise run` task to execute the lessons. To run `s11`, you type `uv run python examples/01-crud-two-styles/s11_create_table.py`. There's no `make all`, no `mise run lesson 13`. No `.envrc`, no auto-activation.
 - **Senior-engineer target state.** `mise.toml` adds `[tasks.lesson]` accepting an arg: `mise run lesson 13` runs `s13_*.py`. Optionally `mise run lessons-all` runs `s11..s15` then `s21..s25` in sequence. A short `[tasks.repl]` opens an `ipython` (or `python -i`) shell with `users_table` and `engine` already imported.
 - **Alternatives considered.**
   - **A: `Makefile`.** Pro: universal. Con: contradicts the project's existing `mise`-first stance.
@@ -87,8 +87,8 @@ Edit this file directly when you spot inaccuracies. Re-run the meta-skill with
 
 ### Security and threat model
 
-- **Current state.** All inputs in the example scripts are hardcoded. The s1x series teaches bound parameters explicitly via `:name` placeholders — see the comment block at `examples/s13_select_data.py:93–104`. The s2x counterpart at `examples/s23_select_data.py:105–117` makes the same point in the Core idiom: column-expression WHEREs always bind values automatically.
-- **Senior-engineer target state.** Add an interactive `s99_sql_injection.py` that takes user input via `input(...)` and shows two implementations side-by-side: the unsafe `f"WHERE name = '{name}'"` (with `text(...)` — explicitly *not* using the `:name` form to make the contrast vivid) vs. the safe `text("WHERE name = :name")` with a parameter dict, AND the equivalent Core `where(users_table.c.name == name)`. Print the actual SQL emitted in each case so the audience walks away knowing what *parameter binding* visually looks like.
+- **Current state.** All inputs in the example scripts are hardcoded. The s1x series teaches bound parameters explicitly via `:name` placeholders — see the comment block at `examples/01-crud-two-styles/s13_select_data.py:93–104`. The s2x counterpart at `examples/01-crud-two-styles/s23_select_data.py:105–117` makes the same point in the Core idiom: column-expression WHEREs always bind values automatically.
+- **Senior-engineer target state.** Add an interactive `examples/01-crud-two-styles/s99_sql_injection.py` that takes user input via `input(...)` and shows two implementations side-by-side: the unsafe `f"WHERE name = '{name}'"` (with `text(...)` — explicitly *not* using the `:name` form to make the contrast vivid) vs. the safe `text("WHERE name = :name")` with a parameter dict, AND the equivalent Core `where(users_table.c.name == name)`. Print the actual SQL emitted in each case so the audience walks away knowing what *parameter binding* visually looks like.
 - **Alternatives considered.**
   - **A: write a paragraph in the README and stop.** Pro: zero scope creep. Con: the project's strength is "show, don't tell"; an unrun script is weaker than a runnable one.
   - **B: a Jupyter notebook that's interactive.** Pro: interactive. Con: adds a notebook tooling stack.
@@ -102,5 +102,5 @@ The repo's git log shows the repo grew from a single Core-only series (`s01`–`
 - **An ORM lesson set.** The repo now has raw SQL and Core; ORM (`s31`–`s35`) is the obvious next chapter. *Evidence:* `learn_this_project/__init__.py` exists and is empty — likely earmarked for a shared ORM module + session factory.
 - **A test suite.** The package is structured as `pip install -e .` ready (egg-info present), which is the shape that becomes useful once tests show up. *Evidence:* no `tests/` dir, no `pytest` dep.
 - **A multi-table example.** Single-table CRUD is intentionally minimal. *Evidence:* none; this is just a normal next step.
-- **A top-level README.** `examples/README.md` is rich and substantial, but the repo-root `README.md` and `README-ORIGINAL.md` are both placeholders containing only the title line — suggesting the project README was deferred in favor of the in-examples on-ramp doc.
+- **A top-level README.** `examples/01-crud-two-styles/README.md` is rich and substantial, but the repo-root `README.md` and `README-ORIGINAL.md` are both placeholders containing only the title line — suggesting the project README was deferred in favor of the in-examples on-ramp doc.
 - **`mise` tasks for running lessons.** `mise.toml` has venv tasks but nothing to actually invoke the lessons. *Evidence:* `mise.toml` ends right after `inst`.

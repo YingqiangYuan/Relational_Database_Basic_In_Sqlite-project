@@ -7,11 +7,11 @@ Edit this file directly when you spot inaccuracies. Re-run the meta-skill with
 
 # 01 — Knowhow Inventory
 
-> **Scope notes (set at meta-skill bootstrap).** The teaching content lives in `examples/`. That directory now contains **two parallel five-script series** plus a shared helper and an on-ramp README. Series 1 (`s11_*` → `s15_*`) teaches CRUD against raw SQL strings via `sqlalchemy.text(...)`. Series 2 (`s21_*` → `s25_*`) teaches the same CRUD topics again using SQLAlchemy Core Expression (`Table`, `select`, `insert`, `update`, `delete`). The top-level package `learn_this_project/` is still a skeleton (`__init__.py` is empty) — it exists only so `pyproject.toml`'s `[tool.setuptools.packages.find]` has something to discover. Treat that package as out-of-scope until it gets real code.
+> **Scope notes (set at meta-skill bootstrap).** The teaching content lives in `examples/01-crud-two-styles/`. That directory now contains **two parallel five-script series** plus a shared helper and an on-ramp README. Series 1 (`s11_*` → `s15_*`) teaches CRUD against raw SQL strings via `sqlalchemy.text(...)`. Series 2 (`s21_*` → `s25_*`) teaches the same CRUD topics again using SQLAlchemy Core Expression (`Table`, `select`, `insert`, `update`, `delete`). The top-level package `learn_this_project/` is still a skeleton (`__init__.py` is empty) — it exists only so `pyproject.toml`'s `[tool.setuptools.packages.find]` has something to discover. Treat that package as out-of-scope until it gets real code.
 
 ## Project at a glance
 
-`learn_this_project` is a beginner-oriented walkthrough of relational-database basics, taught against SQLite. The lessons are deliberately given **twice**: once as plain SQL strings sent through SQLAlchemy's `text()` wrapper (the **s1x** series), and once as Python-built query objects using SQLAlchemy 2.0 Core Expression (the **s2x** series). The two series cover exactly the same SQL operations — `CREATE TABLE`, `INSERT`, `SELECT`, `UPDATE`, `DELETE` — so the learner first sees raw SQL with their own eyes, then sees the same effect produced by a composable Pythonic API. Every script is self-contained: it spins up an in-memory SQLite database (`sqlite:///:memory:`), redefines the same `users` table, seeds data, and demonstrates one topic. The intended audience has read some Python but never written SQL; the goal is to build the mental model "rows + columns + four verbs" before introducing sessions, ORMs, migrations, or persistence.
+`learn_this_project` is a beginner-oriented walkthrough of relational-database basics, taught against SQLite. The lessons are deliberately given **twice**: once as plain SQL strings sent through SQLAlchemy's `text()` wrapper (the **s1x** series), and once as Python-built query objects using SQLAlchemy 2.0 Core Expression (the **s2x** series). The two series cover exactly the same SQL operations — `CREATE TABLE`, `INSERT`, `SELECT`, `UPDATE`, `DELETE` — so the learner first sees raw SQL with their own eyes, then sees the same effect produced by a composable Pythonic API. Every script is self-contained: it spins up an in-memory SQLite database (`sqlite:///:memory:`), redefines the same `users` table, seeds data, and demonstrates one topic. The lesson scripts now live under `examples/01-crud-two-styles/`. The intended audience has read some Python but never written SQL; the goal is to build the mental model "rows + columns + four verbs" before introducing sessions, ORMs, migrations, or persistence.
 
 ## Architecture overview
 
@@ -21,132 +21,133 @@ Edit this file directly when you spot inaccuracies. Re-run the meta-skill with
                             │
                             ▼
    examples/   (the lesson — read README.md first, then s1x, then s2x)
-   ├── README.md                 ── background: why Python scripts, why
-   │                                SQLite, why SQLAlchemy, what each
-   │                                series teaches and in what order
-   │
-   ├── s11_create_table.py       ── RAW SQL via text(): CREATE TABLE
-   ├── s12_insert_data.py        ── RAW SQL: INSERT (single + executemany,
-   │                                bound parameters with :name)
-   ├── s13_select_data.py        ── RAW SQL: SELECT (all / cols / WHERE /
-   │                                ORDER BY+LIMIT / .all/.first/.scalar/iter)
-   ├── s14_update_data.py        ── RAW SQL: UPDATE (PK / multi-row / age=age+1)
-   ├── s15_delete_data.py        ── RAW SQL: DELETE (PK / WHERE / all)
-   │
-   ├── s21_create_table.py       ── Core Expression: CREATE TABLE + inspect()
-   ├── s22_insert_data.py        ── Core: INSERT (insert().values() + executemany)
-   ├── s23_select_data.py        ── Core: SELECT (column objects, .where, etc.)
-   ├── s24_update_data.py        ── Core: UPDATE (update().where().values())
-   ├── s25_delete_data.py        ── Core: DELETE (delete().where())
-   │
-   └── utils.py                  ── print_table() shared ASCII renderer
+   └── 01-crud-two-styles/
+       ├── README.md                 ── background: why Python scripts, why
+       │                                SQLite, why SQLAlchemy, what each
+       │                                series teaches and in what order
+       │
+       ├── s11_create_table.py       ── RAW SQL via text(): CREATE TABLE
+       ├── s12_insert_data.py        ── RAW SQL: INSERT (single + executemany,
+       │                                bound parameters with :name)
+       ├── s13_select_data.py        ── RAW SQL: SELECT (all / cols / WHERE /
+       │                                ORDER BY+LIMIT / .all/.first/.scalar/iter)
+       ├── s14_update_data.py        ── RAW SQL: UPDATE (PK / multi-row / age=age+1)
+       ├── s15_delete_data.py        ── RAW SQL: DELETE (PK / WHERE / all)
+       │
+       ├── s21_create_table.py       ── Core Expression: CREATE TABLE + inspect()
+       ├── s22_insert_data.py        ── Core: INSERT (insert().values() + executemany)
+       ├── s23_select_data.py        ── Core: SELECT (column objects, .where, etc.)
+       ├── s24_update_data.py        ── Core: UPDATE (update().where().values())
+       ├── s25_delete_data.py        ── Core: DELETE (delete().where())
+       │
+       └── utils.py                  ── print_table() shared ASCII renderer
 
    learn_this_project/
    └── __init__.py               ── empty; package exists only so the
                                      setuptools project is buildable
 ```
 
-There is no application here — no entry point, no service, no CLI, no tests. The "runnable surface" is each `examples/sNN_*.py` file, executed individually with `python examples/sNN_*.py`. They share nothing at runtime: each script spins up its own SQLite engine, its own `users` table (in s1x via raw `CREATE TABLE`, in s2x via `MetaData` + `Table`), and seeds its own data. The intended reading order is **README.md first** (frames the why), then s11→s15 in sequence (raw SQL), then s21→s25 (Core Expression).
+There is no application here — no entry point, no service, no CLI, no tests. The "runnable surface" is each `examples/01-crud-two-styles/sNN_*.py` file, executed individually with `python examples/01-crud-two-styles/sNN_*.py`. They share nothing at runtime: each script spins up its own SQLite engine, its own `users` table (in s1x via raw `CREATE TABLE`, in s2x via `MetaData` + `Table`), and seeds its own data. The intended reading order is **README.md first** (frames the why), then s11→s15 in sequence (raw SQL), then s21→s25 (Core Expression).
 
 ## Component inventory
 
-### `examples/README.md` — Background and reading order
+### `examples/01-crud-two-styles/README.md` — Background and reading order
 
 - **What.** A multi-page on-ramp explaining (a) why every lesson is delivered as a Python script rather than as paste-into-a-GUI snippets, (b) why SQLite was chosen, (c) why SQLAlchemy shows up in a "learn SQL" course, (d) what each of the two script series teaches and in what order to read them, and (e) a one-paragraph acknowledgement of the ORM as a future topic (deliberately out of scope here).
 - **Why.** A learner who opens the examples folder cold has three unanswered questions: "why scripts?", "why SQLite + SQLAlchemy?", "why two parallel series?". Putting the answers in `README.md` keeps every individual script focused on its own CRUD topic and avoids repeating the rationale in five docstrings. The "raw-SQL-first, Core-second" sequencing is justified here so the learner does not feel jerked into an abstraction layer before they have seen the thing being abstracted.
-- **Key files.** `examples/README.md` (the whole file is the lesson; the "Two script series" section is the contract between the README and the scripts).
+- **Key files.** `examples/01-crud-two-styles/README.md` (the whole file is the lesson; the "Two script series" section is the contract between the README and the scripts).
 - **Depends on.** Nothing at runtime — it's documentation.
 - **Gotchas.** If the README and the scripts ever disagree on the order or the rationale (e.g., README says "read s1x first" but the conventions in `01-knowhow-inventory.md` say something else), the README wins as the learner-facing artifact and the docs here should be updated to match.
 
-### `examples/s11_create_table.py` — CREATE TABLE (raw SQL)
+### `examples/01-crud-two-styles/s11_create_table.py` — CREATE TABLE (raw SQL)
 
 - **What.** Builds an in-memory SQLite engine without `echo=True`, defines a multi-line `CREATE TABLE IF NOT EXISTS users (...)` via `sqlalchemy.text(...)`, runs it inside `engine.begin()`, then verifies with `inspect(engine)` (table list + per-column metadata) and an empty `SELECT * FROM users` rendered through `print_table`.
 - **Why.** This is the very first lesson, so it must show the *whole shape* of "Python → SQL → database → back to Python" using nothing the learner has not been told about. Raw `text()` was chosen instead of the Core API because the learner needs to see SQL itself before they see SQL-shaped Python objects. `echo` is deliberately off (the SQL is already visible in the source); the schema is still verified with `inspect()` so the learner sees that the table really exists, closing the loop on lesson one.
-- **Key files.** `examples/s11_create_table.py:63` (engine, no `echo`), `:94` (`text()` block for `CREATE TABLE`), `:114–115` (`engine.begin()` + `conn.execute`), `:131` (`inspect(engine)` verification block), `:141–142` (empty `SELECT *` via `print_table`).
-- **Depends on.** SQLAlchemy (`create_engine`, `inspect`, `text`); `examples/utils.py` for `print_table`.
+- **Key files.** `examples/01-crud-two-styles/s11_create_table.py:63` (engine, no `echo`), `:94` (`text()` block for `CREATE TABLE`), `:114–115` (`engine.begin()` + `conn.execute`), `:131` (`inspect(engine)` verification block), `:141–142` (empty `SELECT *` via `print_table`).
+- **Depends on.** SQLAlchemy (`create_engine`, `inspect`, `text`); `examples/01-crud-two-styles/utils.py` for `print_table`.
 - **Gotchas.** No `echo=True` here — that flag is intentionally reserved for s2x. The CREATE statement is wrapped in `text("""...""")` (triple-quoted) so multiline SQL stays readable. The `:memory:` database disappears at process exit, so nothing carries from s11 to s12.
 
-### `examples/s12_insert_data.py` — INSERT (raw SQL)
+### `examples/01-crud-two-styles/s12_insert_data.py` — INSERT (raw SQL)
 
 - **What.** Rebuilds the schema via `text("CREATE TABLE IF NOT EXISTS users ...")`, then demonstrates (1) single-row INSERT with named bound parameters `:name, :age, :email` and a dict payload, capturing `result.lastrowid` to show the auto-assigned id; (2) bulk INSERT by passing a *list of dicts* as the second argument to `conn.execute(text(...), [...])` — the executemany form. Reads everything back with `text("SELECT * FROM users")`.
 - **Why.** This is also the first script where **bound parameters** appear, so the module docstring leads with a "never f-string user input into SQL" warning. The two patterns (single dict vs list-of-dicts) are taught side-by-side because they share a SQL string but differ in the second `execute` argument — that contrast is the lesson. `result.lastrowid` is the raw-SQL counterpart to s22's `result.inserted_primary_key`; teaching it now means the learner already has both vocabularies when they reach Core.
-- **Key files.** `examples/s12_insert_data.py:48` (engine), `:50–59` (CREATE), `:73–80` (single INSERT with `:name`/`:age`/`:email`, `result.lastrowid`), `:97–104` (executemany via list-of-dicts), `:120–123` (read-back).
-- **Depends on.** SQLAlchemy (`create_engine`, `text`); `examples/utils.py`.
+- **Key files.** `examples/01-crud-two-styles/s12_insert_data.py:48` (engine), `:50–59` (CREATE), `:73–80` (single INSERT with `:name`/`:age`/`:email`, `result.lastrowid`), `:97–104` (executemany via list-of-dicts), `:120–123` (read-back).
+- **Depends on.** SQLAlchemy (`create_engine`, `text`); `examples/01-crud-two-styles/utils.py`.
 - **Gotchas.** Bound parameters use a leading colon (`:name`) and are matched by *key*, not position. The list-of-dicts form runs the statement once per dict; the database driver may batch internally, but conceptually it's still N inserts. `result.lastrowid` is a SQLite/DB-API attribute — Postgres-via-psycopg, by contrast, would not surface it the same way and you'd want `RETURNING id` instead.
 
-### `examples/s13_select_data.py` — SELECT (raw SQL)
+### `examples/01-crud-two-styles/s13_select_data.py` — SELECT (raw SQL)
 
 - **What.** Five sub-lessons against `text(...)` queries: (1) `SELECT * FROM users`; (2) `SELECT name, age FROM users` (column projection); (3) `WHERE age > :min_age` with a bound parameter dict; (4) `ORDER BY age DESC LIMIT 2`; (5) consuming a `Result` four ways — `.first()`, `.scalar()`, direct iteration, plus `.all()` mentioned in the prose.
 - **Why.** SELECT is by far the most-used SQL verb, so it gets the deepest single script. The WHERE example is intentionally written with a bound parameter rather than a Python f-string, because this is the lesson where the learner most plausibly thinks "I'll just interpolate the value" — and the comment block here is where the SQL-injection point is made. The four consumption styles (`.all` / `.first` / `.scalar` / iter) are bundled because beginners frequently use the wrong one and either crash on large results or call `.scalar()` against a multi-row query.
-- **Key files.** `examples/s13_select_data.py:67–71` (1, all rows), `:85–90` (2, column projection), `:106–110` (3, WHERE + `:min_age` bound parameter), `:123–125` (4, ORDER BY + LIMIT), `:142–161` (5, `.first` / `.scalar` / iter).
-- **Depends on.** SQLAlchemy (`create_engine`, `text`); `examples/utils.py`.
+- **Key files.** `examples/01-crud-two-styles/s13_select_data.py:67–71` (1, all rows), `:85–90` (2, column projection), `:106–110` (3, WHERE + `:min_age` bound parameter), `:123–125` (4, ORDER BY + LIMIT), `:142–161` (5, `.first` / `.scalar` / iter).
+- **Depends on.** SQLAlchemy (`create_engine`, `text`); `examples/01-crud-two-styles/utils.py`.
 - **Gotchas.** `engine.connect()` is used here (not `engine.begin()`) because SELECT is pure read — no transaction to commit. The bound-parameter dict is the second positional argument to `execute`; if you forget it the database raises a "bind parameter unset" error, not a Python `KeyError`. `.first()` returns `None` on no-match, not an exception.
 
-### `examples/s14_update_data.py` — UPDATE (raw SQL)
+### `examples/01-crud-two-styles/s14_update_data.py` — UPDATE (raw SQL)
 
 - **What.** Three update lessons via `text(...)`: (1) update by primary key — `UPDATE users SET email = :email WHERE id = :id`; (2) update many rows by condition — `UPDATE users SET name = :name WHERE age < :max_age`; (3) compute new from old — `UPDATE users SET age = age + 1` (no parameters needed). Defines a local `print_all(label)` helper to dump the table after each step. Logs `result.rowcount` every time.
 - **Why.** UPDATE is the operation where beginners do the most damage. The script repeats the rule "always WHERE" in the module docstring AND in the section comment of each example, because a forgotten WHERE silently rewrites the whole table. Teaching `age = age + 1` as a SQL expression (computed inside the database) instead of as a Python-side read-modify-write is also a deliberate lesson — one round-trip, atomic per row.
-- **Key files.** `examples/s14_update_data.py:57–65` (`print_all` helper), `:73–93` (PK-targeted update), `:96–112` (multi-row update via `:max_age`), `:115–130` (computed `age = age + 1`).
-- **Depends on.** SQLAlchemy (`create_engine`, `text`); `examples/utils.py`.
+- **Key files.** `examples/01-crud-two-styles/s14_update_data.py:57–65` (`print_all` helper), `:73–93` (PK-targeted update), `:96–112` (multi-row update via `:max_age`), `:115–130` (computed `age = age + 1`).
+- **Depends on.** SQLAlchemy (`create_engine`, `text`); `examples/01-crud-two-styles/utils.py`.
 - **Gotchas.** `result.rowcount == 0` after an UPDATE is *not an error*; it just means the WHERE matched nothing. That can be a genuine answer (the row you meant to update didn't exist) or a bug (your WHERE is wrong) — the learner must judge. `age = age + 1` inside `text(...)` is plain SQL, but it's also where students get confused: the `+ 1` runs server-side against the column's current value, not against a Python variable.
 
-### `examples/s15_delete_data.py` — DELETE (raw SQL)
+### `examples/01-crud-two-styles/s15_delete_data.py` — DELETE (raw SQL)
 
 - **What.** Three delete lessons via `text(...)`: (1) delete by PK — `DELETE FROM users WHERE id = :id`; (2) delete by condition — `DELETE FROM users WHERE age < :max_age`; (3) delete all rows — `DELETE FROM users` (no WHERE). The module docstring contrasts `DELETE` (rows go, schema stays) with `DROP TABLE` (schema also goes).
 - **Why.** DELETE closes the CRUD loop and is taught last because it is destructive. The order — PK → WHERE → no-WHERE — is itself the lesson: start with the safest form, then progressively widen the blast radius. The "preview with a SELECT first" advice in the comments at `:97–110` is the operational safety habit that matters in practice, not Python-side defensive checks.
-- **Key files.** `examples/s15_delete_data.py:84–92` (PK-targeted), `:97–115` (WHERE-targeted, plus the SELECT-as-preview tip), `:122–137` (delete-all dangerous form, with DROP-vs-DELETE note).
-- **Depends on.** SQLAlchemy (`create_engine`, `text`); `examples/utils.py`.
+- **Key files.** `examples/01-crud-two-styles/s15_delete_data.py:84–92` (PK-targeted), `:97–115` (WHERE-targeted, plus the SELECT-as-preview tip), `:122–137` (delete-all dangerous form, with DROP-vs-DELETE note).
+- **Depends on.** SQLAlchemy (`create_engine`, `text`); `examples/01-crud-two-styles/utils.py`.
 - **Gotchas.** Once a transaction containing a DELETE commits, the rows are gone at this layer — there is no application-level undo. The DELETE-vs-DROP contrast matters operationally: DROP requires re-running CREATE before any subsequent statement against the table will work.
 
-### `examples/s21_create_table.py` — CREATE TABLE (Core Expression)
+### `examples/01-crud-two-styles/s21_create_table.py` — CREATE TABLE (Core Expression)
 
 - **What.** The Core Expression version of `s11`. Builds an engine with `echo=True`, declares the same `users` table via `MetaData` + `Table(Column(...), Column(...), …)`, then calls `metadata.create_all(engine)`. Verifies with `inspect(engine)` and renders the empty table via `select(users_table)` + `print_table`.
 - **Why.** This script is the bridge from "SQL as text" (s1x) to "SQL as Python expressions". It deliberately reproduces what `s11` already did, so the learner can compare line-for-line: the Python code looks different, but the resulting SQL (visible thanks to `echo=True`) is the same `CREATE TABLE`. `echo=True` is turned on for the entire s2x series specifically because the lesson here is *what SQL did SQLAlchemy generate from my Python?*.
-- **Key files.** `examples/s21_create_table.py:61` (engine with `echo=True`), `:73` (`MetaData()`), `:102–109` (`Table(...)` with four `Column(...)`), `:122` (`metadata.create_all`), `:131–137` (`inspect` verification), `:148–149` (empty SELECT).
-- **Depends on.** SQLAlchemy Core (`create_engine`, `MetaData`, `Table`, `Column`, `Integer`, `String`, `inspect`, `select`); `examples/utils.py`.
+- **Key files.** `examples/01-crud-two-styles/s21_create_table.py:61` (engine with `echo=True`), `:73` (`MetaData()`), `:102–109` (`Table(...)` with four `Column(...)`), `:122` (`metadata.create_all`), `:131–137` (`inspect` verification), `:148–149` (empty SELECT).
+- **Depends on.** SQLAlchemy Core (`create_engine`, `MetaData`, `Table`, `Column`, `Integer`, `String`, `inspect`, `select`); `examples/01-crud-two-styles/utils.py`.
 - **Gotchas.** Reading `echo=True`'s output on the very first run is overwhelming — that's expected. Encourage learners to focus on the `CREATE TABLE` block emitted under "BEGIN (implicit)" and ignore the rest until they have a frame of reference.
 
-### `examples/s22_insert_data.py` — INSERT (Core Expression)
+### `examples/01-crud-two-styles/s22_insert_data.py` — INSERT (Core Expression)
 
 - **What.** Core counterpart of `s12`. Single insert via `insert(users_table).values(name=…, age=…, email=…)`, capturing `result.inserted_primary_key`. Bulk insert via `conn.execute(insert(users_table), [dict, dict, dict])` — list-of-dicts as the executemany form.
 - **Why.** The shape difference between the two patterns is the lesson: `.values()` for one row, list-of-dicts (and no `.values()`) for many. `inserted_primary_key` is the Core-friendly way to recover the auto-assigned id; it's a tuple (because composite primary keys exist), even when the PK is a single integer column. Teaching this is necessary because every "insert and then immediately reference the new row" workflow needs it.
-- **Key files.** `examples/s22_insert_data.py:75–82` (single insert via `.values()`, `inserted_primary_key`), `:95–104` (executemany via list-of-dicts), `:118–122` (read-back via `select`).
-- **Depends on.** SQLAlchemy Core (adds `insert`); `examples/utils.py`.
+- **Key files.** `examples/01-crud-two-styles/s22_insert_data.py:75–82` (single insert via `.values()`, `inserted_primary_key`), `:95–104` (executemany via list-of-dicts), `:118–122` (read-back via `select`).
+- **Depends on.** SQLAlchemy Core (adds `insert`); `examples/01-crud-two-styles/utils.py`.
 - **Gotchas.** The two patterns look almost identical but are NOT interchangeable: the single-row pattern uses `.values()` and no second positional arg to `execute`; the bulk pattern omits `.values()` and passes the data as the second arg. Mixing them silently does the wrong thing (you get one insert with literal dict values, or an error).
 
-### `examples/s23_select_data.py` — SELECT (Core Expression)
+### `examples/01-crud-two-styles/s23_select_data.py` — SELECT (Core Expression)
 
 - **What.** Five sub-lessons mirroring `s13`: (1) `select(users_table)`; (2) column projection via `select(users_table.c.name, users_table.c.age)`; (3) `.where(users_table.c.age > 25)`; (4) `.order_by(users_table.c.age.desc()).limit(2)`; (5) `.first()`, `.scalar()`, iteration. The module docstring frames "comparison expressions are SQL expressions, not Python booleans" as the central conceptual stumble.
 - **Why.** This is the script where the Core abstraction earns its keep: `users_table.c.age > 25` is a query *fragment* that can be reused, composed, conditionally added, and reflected at runtime — none of which a raw string supports. The script also re-teaches `.first / .scalar / iter` so the learner sees the cursor API is shared between raw SQL and Core (it's a property of the Result, not of how the query was built).
-- **Key files.** `examples/s23_select_data.py:80–84` (1, all rows), `:97–101` (2, column projection), `:118–120` (3, WHERE via column expression), `:133–139` (4, ORDER BY + LIMIT), `:155–172` (5, consumption styles).
-- **Depends on.** SQLAlchemy Core (uses `select`); `examples/utils.py`.
+- **Key files.** `examples/01-crud-two-styles/s23_select_data.py:80–84` (1, all rows), `:97–101` (2, column projection), `:118–120` (3, WHERE via column expression), `:133–139` (4, ORDER BY + LIMIT), `:155–172` (5, consumption styles).
+- **Depends on.** SQLAlchemy Core (uses `select`); `examples/01-crud-two-styles/utils.py`.
 - **Gotchas.** `users_table.c.age > 25` returns a SQL expression object — not a Python boolean. That's the most common conceptual stumble and the docstring calls it out explicitly. Bound parameters are automatic in Core: the literal `25` is sent over the wire as a parameter, not baked into the SQL string, so injection safety is built in even when the comparison value comes from user input.
 
-### `examples/s24_update_data.py` — UPDATE (Core Expression)
+### `examples/01-crud-two-styles/s24_update_data.py` — UPDATE (Core Expression)
 
 - **What.** Core counterpart of `s14`: (1) `update(users_table).where(users_table.c.id == 1).values(email=...)`; (2) `update(users_table).where(users_table.c.age < 30).values(name="YOUNGSTER")`; (3) `update(users_table).values(age=users_table.c.age + 1)` — passing a column-arithmetic expression to `.values()`. Same local `print_all` helper and `rowcount` logging as `s14`.
 - **Why.** The "compute new value from old value" lesson is the place where Core most visibly *out*-reads raw SQL: `users_table.c.age + 1` is a Python expression that compiles into `age = age + 1` in the generated SQL. The learner can both feel that it's still real SQL (echo will show it) and feel why composing in Python is convenient.
-- **Key files.** `examples/s24_update_data.py:71–79` (`print_all` helper), `:99–108` (PK-targeted), `:120–129` (multi-row by condition), `:145–148` (computed update via column expression).
-- **Depends on.** SQLAlchemy Core (adds `update`); `examples/utils.py`.
+- **Key files.** `examples/01-crud-two-styles/s24_update_data.py:71–79` (`print_all` helper), `:99–108` (PK-targeted), `:120–129` (multi-row by condition), `:145–148` (computed update via column expression).
+- **Depends on.** SQLAlchemy Core (adds `update`); `examples/01-crud-two-styles/utils.py`.
 - **Gotchas.** `print_all` is defined inside `s24` (and `s25`) rather than in `utils.py` because it captures the module-local `engine` and `users_table`. Lifting it would force a more complex helper signature without a reuse benefit.
 
-### `examples/s25_delete_data.py` — DELETE (Core Expression)
+### `examples/01-crud-two-styles/s25_delete_data.py` — DELETE (Core Expression)
 
 - **What.** Core counterpart of `s15`: (1) `delete(users_table).where(users_table.c.id == 2)`; (2) `delete(users_table).where(users_table.c.age < 25)`; (3) `delete(users_table)` with no `.where(...)` — the dangerous form. Closing comment contrasts `delete()` with `users_table.drop(engine)` (DROP TABLE).
 - **Why.** Closes the CRUD loop on the Core side. The progression PK → WHERE → no-WHERE is identical to `s15` on purpose: the learner now sees that the *structure* of CRUD is the same regardless of whether the SQL is hand-written or composed.
-- **Key files.** `examples/s25_delete_data.py:72–80` (`print_all`), `:97–100` (PK-targeted), `:119–122` (condition-targeted, with SELECT-as-preview comment), `:140–142` (delete-all dangerous form, with DROP-vs-DELETE note).
-- **Depends on.** SQLAlchemy Core (adds `delete`); `examples/utils.py`.
+- **Key files.** `examples/01-crud-two-styles/s25_delete_data.py:72–80` (`print_all`), `:97–100` (PK-targeted), `:119–122` (condition-targeted, with SELECT-as-preview comment), `:140–142` (delete-all dangerous form, with DROP-vs-DELETE note).
+- **Depends on.** SQLAlchemy Core (adds `delete`); `examples/01-crud-two-styles/utils.py`.
 - **Gotchas.** Same as `s15`: there's no application-level undo, and DELETE (rows go) is not the same as DROP TABLE (table itself goes).
 
-### `examples/utils.py` — `print_table` helper
+### `examples/01-crud-two-styles/utils.py` — `print_table` helper
 
 - **What.** A 35-line module exposing one function: `print_table(result: CursorResult, title: str = "") -> None`. Reads column names from `result.keys()`, builds a `prettytable.PrettyTable`, left-aligns columns (`table.align = "l"`), iterates the cursor, and prints. Optional `title` adds a `--- {title} ---` banner.
 - **Why.** Every example script renders rows. Raw tuple printing (`(1, 'Alice', 30, 'alice@example.com')`) is hard to scan. Centralizing the renderer means all ten scripts produce visually consistent output, and each individual script stays focused on its CRUD topic instead of repeating print boilerplate. The shared helper *is* the convention.
-- **Key files.** `examples/utils.py:25` (signature + docstring), `:40` (column extraction via `result.keys()`), `:48` (left-align decision), `:53` (row loop).
+- **Key files.** `examples/01-crud-two-styles/utils.py:25` (signature + docstring), `:40` (column extraction via `result.keys()`), `:48` (left-align decision), `:53` (row loop).
 - **Depends on.** `prettytable.PrettyTable`, `sqlalchemy.CursorResult`.
 - **Gotchas.** `CursorResult` is **single-use** — once `print_table` iterates it, the caller cannot read it again. The docstring calls this out. Both raw SQL (`conn.execute(text(...))`) and Core (`conn.execute(select(...))`) return the same `CursorResult` type, which is why one helper works for both series.
 
-### `examples/__pycache__/`
+### `examples/01-crud-two-styles/__pycache__/`
 
 - **What.** Python bytecode cache, auto-generated when scripts run.
 - **Why.** Standard CPython behavior; should be ignored by `.gitignore`.
@@ -164,13 +165,13 @@ There is no application here — no entry point, no service, no CLI, no tests. T
 - **What.** PEP 621 project metadata. Declares `name = "learn_this_project"`, `version = "0.1.1"`, `requires-python = ">=3.12,<4.0"`, dependencies (`SQLAlchemy>=2.0.33,<3.0.0`, `prettytable>=3.15.1,<4.0.0`), and tells setuptools to package only `learn_this_project*`.
 - **Why.** The build is setuptools-based (not poetry / hatchling) — likely because setuptools is the most familiar to a beginner audience and works out of the box with `uv`. The dep version pins are conservative-major (allows minor + patch upgrades, blocks breaking-major). SQLAlchemy 2.0+ is required because the example code uses 2.0-style `select()/insert()/update()/delete()` constructors *and* the 2.0 form of `text(...)` execution.
 - **Key files.** `pyproject.toml` (all ~18 lines).
-- **Gotchas.** The `examples/` directory is **not** packaged (the `find` block only matches `learn_this_project*`). That's fine for a learning repo, but anyone who tried to `pip install` the wheel from somewhere other than the cloned repo would not have the example scripts.
+- **Gotchas.** The `examples/01-crud-two-styles/` directory is **not** packaged (the `find` block only matches `learn_this_project*`). That's fine for a learning repo, but anyone who tried to `pip install` the wheel from somewhere other than the cloned repo would not have the example scripts.
 
 ### `mise.toml`
 
 - **What.** Defines toolchain (`python = "3.12"`, `uv = "latest"`, `claude = "latest"`) and three tasks: `venv-create` (`uv venv`), `venv-remove` (`rm -r .venv`), `inst` (`uv sync --all-extras`).
 - **Why.** `mise` is the project's choice for managing both runtime versions and project tasks (replacing the older `asdf` + `make` + `nvm`-style stacks). The three tasks are the minimum needed to onboard: create env, install deps, and (as a destructive helper) wipe the env.
-- **Gotchas.** No `mise run` task for the example scripts themselves — you invoke them directly with `uv run python examples/sNN_*.py` (or with the venv activated, plain `python examples/sNN_*.py`). Adding `mise` tasks per example would be a small DX upgrade (see `03-elevation-roadmap.md`).
+- **Gotchas.** No `mise run` task for the example scripts themselves — you invoke them directly with `uv run python examples/01-crud-two-styles/sNN_*.py` (or with the venv activated, plain `python examples/01-crud-two-styles/sNN_*.py`). Adding `mise` tasks per example would be a small DX upgrade (see `03-elevation-roadmap.md`).
 
 ### `CLAUDE.md`
 
@@ -180,8 +181,8 @@ There is no application here — no entry point, no service, no CLI, no tests. T
 ### `README.md`, `README-ORIGINAL.md`, `README-cn.md`
 
 - **What.** `README.md` and `README-ORIGINAL.md` currently contain only the project title. `README-cn.md` exists as a Chinese-language counterpart (see `git log`); content there is more substantial.
-- **Why (best guess; verify with project owner).** The English README is a placeholder — there's a richer `examples/README.md` that does the on-ramp work, so the repo-root README has not been prioritized. `README-ORIGINAL.md` looks preserved from an earlier scaffolding step.
-- **Gotchas.** External viewers landing on the repo will see "no real README"; the *real* introduction is `examples/README.md`. Worth fixing if this is ever surfaced publicly.
+- **Why (best guess; verify with project owner).** The English README is a placeholder — there's a richer `examples/01-crud-two-styles/README.md` that does the on-ramp work, so the repo-root README has not been prioritized. `README-ORIGINAL.md` looks preserved from an earlier scaffolding step.
+- **Gotchas.** External viewers landing on the repo will see "no real README"; the *real* introduction is `examples/01-crud-two-styles/README.md`. Worth fixing if this is ever surfaced publicly.
 
 ## Conventions
 
@@ -194,7 +195,7 @@ There is no application here — no entry point, no service, no CLI, no tests. T
 7. **One section per concept, separated by `# ---...---` banners.** Easy to grep, easy to skim, easy for a learner to set a breakpoint at the start of any section.
 8. **All output flows through `print_table`** (or its `print_all` wrapper in `s14`/`s15`/`s24`/`s25`). Bare `print(row)` only appears in `s13`/`s23`'s "iter" example, where seeing raw row tuples is the point.
 9. **Comments explain *why*, not *what*.** Code says `metadata.create_all(engine)`; the comment above it explains *why this is the moment Python finally talks to the database*.
-10. **`examples/README.md` is the on-ramp.** A learner who is told "open the examples folder" should open the README first; the scripts assume that prior context.
+10. **`examples/01-crud-two-styles/README.md` is the on-ramp.** A learner who is told "open the examples folder" should open the README first; the scripts assume that prior context.
 
 ## External dependencies
 

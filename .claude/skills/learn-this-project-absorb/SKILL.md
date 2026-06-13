@@ -46,18 +46,18 @@ This skill has **five modes**, not one. Pick the mode that matches what the user
 Goal: by the end of this run, the user has (a) a mental table-of-contents of the repo and (b) **two explicit lists: files to READ and files to RUN/DO**. Without that read/run split, this mode failed.
 
 1. Print a 4–6 line project summary in your own words.
-2. Walk through the inventory top-down at the **architecture** level — what's in `examples/` (the s1x raw-SQL and s2x Core Expression series), what's in the `learn_this_project/` package source, what's config. One sentence each. Don't open individual files yet.
+2. Walk through the inventory top-down at the **architecture** level — what's in `examples/01-crud-two-styles/` (the s1x raw-SQL and s2x Core Expression series), what's in the `learn_this_project/` package source, what's config. One sentence each. Don't open individual files yet.
 3. **Explicitly produce the read/run classification.** Print it as two lists:
 
    ```
    Files to READ (study them as prose; don't try to run them):
-   - examples/README.md — the on-ramp doc
-   - examples/utils.py — the shared print_table helper
+   - examples/01-crud-two-styles/README.md — the on-ramp doc
+   - examples/01-crud-two-styles/utils.py — the shared print_table helper
    - README.md, CLAUDE.md — project framing and dev setup
 
    Files to RUN/DO (you must actually execute these — watching won't teach you):
-   - examples/s11..s15_*.py — the raw-SQL series
-   - examples/s21..s25_*.py — the Core Expression series
+   - examples/01-crud-two-styles/s11..s15_*.py — the raw-SQL series
+   - examples/01-crud-two-styles/s21..s25_*.py — the Core Expression series
    - mise run venv-create / mise run inst — the toolchain bootstrap
    ```
 
@@ -73,7 +73,7 @@ The user has come with a context: a file path, a line range, a question about a 
 1. Read the file(s) they named.
 2. Quote 5–15 lines around the spot they pointed at.
 3. Explain what's happening at that spot — mechanism (the *how*) first, then rationale (the *why*).
-4. Connect to 1–2 related parts of the repo if it deepens understanding (e.g., "this is the s1x counterpart of `s23_select_data.py:118`").
+4. Connect to 1–2 related parts of the repo if it deepens understanding (e.g., "this is the s1x counterpart of `examples/01-crud-two-styles/s23_select_data.py:118`").
 5. Ask the user one focused question: "Does that resolve it, or want me to go deeper on X?"
 
 Do not pivot back to "let me walk you through the architecture" unless the user asks. Stay with their context.
@@ -84,7 +84,7 @@ The user has been working and isn't sure what to do next. Help them sequence.
 
 1. Ask one calibration question if not already clear: "What have you covered so far, and what's your end-goal (interview prep / portfolio / curiosity / a specific extension)?"
 2. Cross-reference against the inventory and the runbook — what hasn't been touched yet, and which item gives the best leverage for the user's goal.
-3. Recommend **one** next thing, with a concrete first action ("open `s24_update_data.py` and run it; pay attention to `rowcount`"). Optionally name a fallback.
+3. Recommend **one** next thing, with a concrete first action ("open `examples/01-crud-two-styles/s24_update_data.py` and run it; pay attention to `rowcount`"). Optionally name a fallback.
 4. Offer: "Want me to switch into Context-dive once you've done that?"
 
 ## Build mode — help the user extend the project
