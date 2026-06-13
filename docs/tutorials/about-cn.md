@@ -1,5 +1,5 @@
 # 课程简介
 
-这门课教你一套五步方法论——absorb、quiz、elevate、interview、demo——用来吃透任何小型学习 repo。第一个模块以 SQLAlchemy 2.0 Core + SQLite 为载体，通过五个独立 Python 脚本走完关系数据库 CRUD 全流程。
+这门课表面上是教 SQL 关系数据库, 真正的产品是一套 `learn-this-project-*` 六步方法论 —— absorb、quiz、elevate、interview、demo、publish —— 用来吃透**任何领域**的技能级小 repo。SQLAlchemy 2.0 Core + SQLite 只是载体, 故意做得很小, 让方法论压过内容本身。
 
-学完之后，你能在面试中自信地讲解一个小项目、面向不同受众做 demo、清楚自己下一步该学什么，并把同一套方法论复用到未来遇到的每一个新 repo 上。
+学完之后, 你能把这套方法复用到未来任何技能级小项目 —— 新框架、AI 技术、UX 模式、商业模型、法律条款、生物 protocol、统计方法、金融模型、marketing 渠道 —— 把每一个都转化成你自己 GitHub 上的 portfolio 作品, 在面试和现场 demo 中自信地讲解它。
