@@ -1,5 +1,5 @@
 # Course Overview
 
-This course teaches a six-move playbook — absorb, quiz, elevate, interview, demo, publish — for mastering any small learning repo and shipping a clean portfolio version of it. The first module applies the playbook to relational-database basics: ten SQLite + SQLAlchemy 2.0 scripts under `examples/01-crud-two-styles/`, taught as two parallel series — `s1x` covers CRUD via raw SQL strings (`text(...)`), `s2x` covers the same CRUD via Core Expression (`Table`, `select`, etc.) — with the ORM deliberately left out.
+This course only looks like a SQL relational database tutorial. Its real product is a six-move methodology — absorb, quiz, elevate, interview, demo, publish — for mastering any small learning repo, in any domain. SQLAlchemy 2.0 Core and SQLite are just the vehicle, kept deliberately small so the method dominates the content.
 
-After completing it, you can defend a small project in interviews to the 3-part standard (where + what + why), present it to any audience without leaking teaching artifacts, identify what to learn next, publish it as a portfolio piece on your own GitHub, and reuse the same six-move methodology on every future repo you pick up.
+After completing it, you can apply the same playbook to any future skill-sized topic — a new framework, AI technique, UX pattern, business model, legal doctrine, bio protocol, statistical method, finance model, or marketing channel — and turn each one into a portfolio piece you can defend in interviews and live demos.
