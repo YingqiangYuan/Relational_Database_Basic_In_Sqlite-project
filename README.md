@@ -41,23 +41,24 @@ The rest of this README explains each move, the order to run them in, and — mo
 
 ## Part 2 — What's in This Repo (the concrete example)
 
-The teaching content lives in `examples/` as **two parallel five-script series**, plus a shared utility and an on-ramp README:
+The teaching content lives in `examples/01-crud-two-styles/` as **two parallel five-script series**, plus a shared utility and an on-ramp README:
 
 ```
 examples/
-├── README.md                 # background: why scripts, why SQLite, why SQLAlchemy,
-│                               and the reading order (read this first)
-├── s11_create_table.py       # raw SQL via text(): CREATE TABLE
-├── s12_insert_data.py        # raw SQL: INSERT (single + executemany, :name binding)
-├── s13_select_data.py        # raw SQL: SELECT (all / cols / WHERE / ORDER / consumption)
-├── s14_update_data.py        # raw SQL: UPDATE (PK / multi-row / age = age + 1)
-├── s15_delete_data.py        # raw SQL: DELETE (PK / WHERE / all + DELETE-vs-DROP)
-├── s21_create_table.py       # Core Expression: same lessons, MetaData + Table
-├── s22_insert_data.py        # Core: insert(t).values(...) + executemany
-├── s23_select_data.py        # Core: select(t).where(...).order_by(...).limit(...)
-├── s24_update_data.py        # Core: update(t).where(...).values(...)
-├── s25_delete_data.py        # Core: delete(t).where(...)
-└── utils.py                  # print_table — shared ASCII renderer for both series
+└── 01-crud-two-styles/
+    ├── README.md                 # background: why scripts, why SQLite, why SQLAlchemy,
+    │                               and the reading order (read this first)
+    ├── s11_create_table.py       # raw SQL via text(): CREATE TABLE
+    ├── s12_insert_data.py        # raw SQL: INSERT (single + executemany, :name binding)
+    ├── s13_select_data.py        # raw SQL: SELECT (all / cols / WHERE / ORDER / consumption)
+    ├── s14_update_data.py        # raw SQL: UPDATE (PK / multi-row / age = age + 1)
+    ├── s15_delete_data.py        # raw SQL: DELETE (PK / WHERE / all + DELETE-vs-DROP)
+    ├── s21_create_table.py       # Core Expression: same lessons, MetaData + Table
+    ├── s22_insert_data.py        # Core: insert(t).values(...) + executemany
+    ├── s23_select_data.py        # Core: select(t).where(...).order_by(...).limit(...)
+    ├── s24_update_data.py        # Core: update(t).where(...).values(...)
+    ├── s25_delete_data.py        # Core: delete(t).where(...)
+    └── utils.py                  # print_table — shared ASCII renderer for both series
 ```
 
 Stack: Python 3.12 + SQLAlchemy 2.0 (raw SQL via `text(...)` first, then Core Expression — **deliberately not the ORM**) + SQLite in-memory. Under ~1000 lines of code. Every script is heavily commented and runs end-to-end with one command.
@@ -138,7 +139,7 @@ Before you run any skill, you should understand *what the skills are actually do
 
 There are **two kinds of knowledge** in any project like this:
 
-1. **The work itself.** The code in `examples/`, the configuration in `pyproject.toml` and `mise.toml`, the data, the design choices, the artifacts that *are* the project. This is the part you came to learn. It's what you'd actually be doing if you were working on a problem.
+1. **The work itself.** The code in `examples/01-crud-two-styles/`, the configuration in `pyproject.toml` and `mise.toml`, the data, the design choices, the artifacts that *are* the project. This is the part you came to learn. It's what you'd actually be doing if you were working on a problem.
 2. **The mentor's notes about the work.** The analysis documents under `docs/learn-this-project/` — a component inventory, a runbook, an elevation roadmap, a quiz bank, an interview playbook, a demo playbook. These are *not* the project's content; they are the mentor's commentary on how to *teach* and *learn* the project. Treat them as an index.
 
 The skills under `.claude/skills/learn-this-project-*/` read the mentor's notes first, consult the project's actual content based on what the notes point at, and then guide you through digesting it. The skills are **not the book you sit down and read cover to cover**. They are coaching modes that lean on the mentor's notes when you need help.
@@ -176,7 +177,7 @@ mise run inst              # installs dependencies (== uv sync --all-extras)
 That's it — you can now run any example script:
 
 ```bash
-uv run python examples/s11_create_table.py
+uv run python examples/01-crud-two-styles/s11_create_table.py
 ```
 
 If something breaks, the recovery move is the same as the rest of the course: open Claude Code, run `/learn-this-project-absorb`, paste the error, and ask the AI to walk you through the fix.
@@ -194,12 +195,12 @@ What follows is the *recommended sequence*, with explicit guidance on how to use
 
 #### Stage 1A: get the overview
 
-Open Claude Code, run `/learn-this-project-absorb`. Let it walk you through **just the high-level map**: what's in `examples/`, what's the two-series structure (s1x raw SQL, s2x Core), what `utils.py` does, what the empty `learn_this_project/` package is for. Don't dive into any one file yet. The goal of this stage is exactly one thing: **leave with a mental table-of-contents of the repo, and a clear sense of which files you need to *read* vs which files you need to *run***.
+Open Claude Code, run `/learn-this-project-absorb`. Let it walk you through **just the high-level map**: what's in `examples/01-crud-two-styles/`, what's the two-series structure (s1x raw SQL, s2x Core), what `utils.py` does, what the empty `learn_this_project/` package is for. Don't dive into any one file yet. The goal of this stage is exactly one thing: **leave with a mental table-of-contents of the repo, and a clear sense of which files you need to *read* vs which files you need to *run***.
 
 That last distinction is critical and the skill should help you draw it. In this repo:
 
-- Files to *read*: the docstrings in each script, `examples/README.md`, `utils.py`. You're not running these to learn; you're reading them like prose.
-- Files to *run*: the ten numbered scripts. You are not just reading them — you are typing `uv run python examples/sNN_*.py` and watching the output. Without that, you haven't learned them; you've only previewed them.
+- Files to *read*: the docstrings in each script, `examples/01-crud-two-styles/README.md`, `utils.py`. You're not running these to learn; you're reading them like prose.
+- Files to *run*: the ten numbered scripts. You are not just reading them — you are typing `uv run python examples/01-crud-two-styles/sNN_*.py` and watching the output. Without that, you haven't learned them; you've only previewed them.
 
 If the absorb session ends without you knowing which files fall into which bucket, you missed Stage 1A's point — ask the skill again.
 
@@ -303,7 +304,7 @@ For files that *might* be teaching material but might also be your own work (scr
 
 The skill **does not run any `git` commands**. Instead it generates a numbered table of 10–15+ commits — dependency-ordered (least-dependent first), each with a file list, a suggested first-person commit message, and a one-sentence rationale. You copy-paste the commands from this file into your terminal yourself, so the resulting commit history is genuinely produced by your fingers, not by an automation.
 
-The typical commit sequence for this repo looks like: root config (`mise.toml`, `pyproject.toml`, `.gitignore`) → empty package skeleton → shared utilities (`examples/utils.py`) → `examples/README.md` → each of `s11`–`s15` → each of `s21`–`s25` → your hand-written `README.md`. Resist the urge to combine scripts into one commit; each is its own piece of the lesson, and the resulting history is part of the signal.
+The typical commit sequence for this repo looks like: root config (`mise.toml`, `pyproject.toml`, `.gitignore`) → empty package skeleton → shared utilities (`examples/01-crud-two-styles/utils.py`) → `examples/01-crud-two-styles/README.md` → each of `s11`–`s15` → each of `s21`–`s25` → your hand-written `README.md`. Resist the urge to combine scripts into one commit; each is its own piece of the lesson, and the resulting history is part of the signal.
 
 #### 5. Co-write your README in your own voice (D-mode)
 
@@ -322,7 +323,7 @@ Your public repo should look like:
 - 10–15+ incremental commits with personal-voice messages.
 - A short README *you* co-wrote with the skill in your own voice.
 - Zero teaching artifacts: no `README-cn.md`, no `docs/learn-this-project/`, no `.claude/skills/learn-this-project-{absorb,quiz,elevate,interview,demo}/`. (`learn-this-project-meta/` is fine and even encouraged.)
-- A `mise.toml` + `pyproject.toml` that actually works (someone else can `mise install && mise run inst && uv run python examples/s11_create_table.py` and have it work).
+- A `mise.toml` + `pyproject.toml` that actually works (someone else can `mise install && mise run inst && uv run python examples/01-crud-two-styles/s11_create_table.py` and have it work).
 - Code that you can walk through live — meaning you've actually read every line during Absorb, not just transcribed it.
 
 That collective signal — "this person can break problems down, work through them step by step, and produce something at the end" — is the actual product of this course.

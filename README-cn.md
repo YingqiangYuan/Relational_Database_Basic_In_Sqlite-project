@@ -41,23 +41,24 @@
 
 ## 第二部分：这个 repo 里装了什么（具体例子）
 
-教学内容在 `examples/` 目录下，由**两个平行的五脚本系列**加一个共享工具和一个引导 README 组成：
+教学内容在 `examples/01-crud-two-styles/` 目录下，由**两个平行的五脚本系列**加一个共享工具和一个引导 README 组成：
 
 ```
 examples/
-├── README.md                 # 背景：为什么用脚本、为什么 SQLite、为什么 SQLAlchemy、
-│                               以及阅读顺序——先读这一个
-├── s11_create_table.py       # 原生 SQL（text）：CREATE TABLE
-├── s12_insert_data.py        # 原生 SQL：INSERT（单条 + 批量，:name 参数绑定）
-├── s13_select_data.py        # 原生 SQL：SELECT（all / 投影 / WHERE / ORDER / 消费方式）
-├── s14_update_data.py        # 原生 SQL：UPDATE（按主键 / 多行 / age = age + 1）
-├── s15_delete_data.py        # 原生 SQL：DELETE（按主键 / WHERE / 全删 + DELETE vs DROP）
-├── s21_create_table.py       # Core Expression：同一节课，MetaData + Table
-├── s22_insert_data.py        # Core：insert(t).values(...) + executemany
-├── s23_select_data.py        # Core：select(t).where(...).order_by(...).limit(...)
-├── s24_update_data.py        # Core：update(t).where(...).values(...)
-├── s25_delete_data.py        # Core：delete(t).where(...)
-└── utils.py                  # print_table —— 两个系列共用的 ASCII 表格打印
+└── 01-crud-two-styles/
+    ├── README.md                 # 背景：为什么用脚本、为什么 SQLite、为什么 SQLAlchemy、
+    │                               以及阅读顺序——先读这一个
+    ├── s11_create_table.py       # 原生 SQL（text）：CREATE TABLE
+    ├── s12_insert_data.py        # 原生 SQL：INSERT（单条 + 批量，:name 参数绑定）
+    ├── s13_select_data.py        # 原生 SQL：SELECT（all / 投影 / WHERE / ORDER / 消费方式）
+    ├── s14_update_data.py        # 原生 SQL：UPDATE（按主键 / 多行 / age = age + 1）
+    ├── s15_delete_data.py        # 原生 SQL：DELETE（按主键 / WHERE / 全删 + DELETE vs DROP）
+    ├── s21_create_table.py       # Core Expression：同一节课，MetaData + Table
+    ├── s22_insert_data.py        # Core：insert(t).values(...) + executemany
+    ├── s23_select_data.py        # Core：select(t).where(...).order_by(...).limit(...)
+    ├── s24_update_data.py        # Core：update(t).where(...).values(...)
+    ├── s25_delete_data.py        # Core：delete(t).where(...)
+    └── utils.py                  # print_table —— 两个系列共用的 ASCII 表格打印
 ```
 
 技术栈：Python 3.12 + SQLAlchemy 2.0（先用 `text(...)` 写原生 SQL，再用 Core Expression——**故意不用 ORM**）+ SQLite in-memory。代码量大约 1000 行以内。每个脚本都有大量教学注释，一条命令就能从头跑到尾。
@@ -140,7 +141,7 @@ Publish skill 有两个 mode。**Transform mode** 一次性走完整个转换：
 
 任何一个这种项目里，其实有**两种知识**：
 
-1. **工作本身。** `examples/` 里的代码、`pyproject.toml` / `mise.toml` 里的配置、数据、设计选择——这些**就是项目**。是你来这里学的内容，是你如果在真实工作中做这个题目所要动手的东西。
+1. **工作本身。** `examples/01-crud-two-styles/` 里的代码、`pyproject.toml` / `mise.toml` 里的配置、数据、设计选择——这些**就是项目**。是你来这里学的内容，是你如果在真实工作中做这个题目所要动手的东西。
 2. **导师对工作的 notes。** `docs/learn-this-project/` 下面那一套分析文档——组件清单、运行手册、拔高路线图、题库、面试剧本、demo 剧本。这些**不是项目内容**，是导师写的"这个项目应该怎么教、怎么学"的注释。当索引用。
 
 `.claude/skills/learn-this-project-*/` 下面的五个 skill，**先去读导师的 notes**，再根据 notes 指向哪里去访问项目本身的内容，然后帮你把它消化下来。skill **不是"打开来从头到尾读"的一本书**，它们是"你需要帮助时进入的一种指导模式"。
@@ -178,7 +179,7 @@ mise run inst              # 装依赖（== uv sync --all-extras）
 完成了——你现在可以跑任何一个示例脚本：
 
 ```bash
-uv run python examples/s11_create_table.py
+uv run python examples/01-crud-two-styles/s11_create_table.py
 ```
 
 如果某一步出问题，恢复动作和这门课其它部分一样：打开 Claude Code、运行 `/learn-this-project-absorb`、贴报错给它、让 AI 带你 debug。
@@ -196,12 +197,12 @@ uv run python examples/s11_create_table.py
 
 #### 阶段 1A：拿到全局地图
 
-打开 Claude Code，运行 `/learn-this-project-absorb`。让它**只**带你过**高层次的地图**：`examples/` 里有什么、为什么是 s1x + s2x 两个平行系列、`utils.py` 干啥的、空的 `learn_this_project/` package 是干啥的。**先不要深入任何单一文件**。这一阶段的目标就是一件事——**离开时你脑子里要有这个 repo 的目录，并且要清楚知道哪些文件你需要"读"、哪些文件你需要"跑"**。
+打开 Claude Code，运行 `/learn-this-project-absorb`。让它**只**带你过**高层次的地图**：`examples/01-crud-two-styles/` 里有什么、为什么是 s1x + s2x 两个平行系列、`utils.py` 干啥的、空的 `learn_this_project/` package 是干啥的。**先不要深入任何单一文件**。这一阶段的目标就是一件事——**离开时你脑子里要有这个 repo 的目录，并且要清楚知道哪些文件你需要"读"、哪些文件你需要"跑"**。
 
 这个区分非常关键，skill 应该帮你画出来。在这个 repo 里：
 
-- 该**读**的文件：每个脚本的 docstring、`examples/README.md`、`utils.py`。这些不是用来跑的，是用来当散文读的。
-- 该**跑**的文件：十个编号的脚本。这些**不是只读**——你要真的输入 `uv run python examples/sNN_*.py` 然后看输出。不跑就没学会，只算扫一眼。
+- 该**读**的文件：每个脚本的 docstring、`examples/01-crud-two-styles/README.md`、`utils.py`。这些不是用来跑的，是用来当散文读的。
+- 该**跑**的文件：十个编号的脚本。这些**不是只读**——你要真的输入 `uv run python examples/01-crud-two-styles/sNN_*.py` 然后看输出。不跑就没学会，只算扫一眼。
 
 如果第一次 absorb 跑完你还说不清这个区分——你就漏掉了阶段 1A 的核心目标，再问 skill 一次。
 
@@ -307,7 +308,7 @@ Skill 列出找到的所有教学产物——就是上面 cardinal 铁律里那�
 
 Skill **完全不跑任何 git 命令**。它做的事情是生成一份编号表，10–15+ 个 commit，按依赖排序（依赖少的先），每条带文件列表、推荐的第一人称 commit message、一句话说明为什么这个 commit 在这个位置。**git 命令是你自己复制粘贴到终端跑的**——所以最后的 commit 历史是你**亲手**跑出来的，不是自动化生成的。
 
-这个 repo 的典型 commit 序列长这样：根配置（`mise.toml`、`pyproject.toml`、`.gitignore`）→ 空包骨架 → 共享工具（`examples/utils.py`）→ `examples/README.md` → `s11`–`s15` 每个一个 commit → `s21`–`s25` 每个一个 commit → 你亲手写的 `README.md`。**不要把多个脚本塞进一个 commit**——每个脚本都是一块独立的内容，让每一块有自己的 commit，最后的 commit 历史本身就是一种信号。
+这个 repo 的典型 commit 序列长这样：根配置（`mise.toml`、`pyproject.toml`、`.gitignore`）→ 空包骨架 → 共享工具（`examples/01-crud-two-styles/utils.py`）→ `examples/01-crud-two-styles/README.md` → `s11`–`s15` 每个一个 commit → `s21`–`s25` 每个一个 commit → 你亲手写的 `README.md`。**不要把多个脚本塞进一个 commit**——每个脚本都是一块独立的内容，让每一块有自己的 commit，最后的 commit 历史本身就是一种信号。
 
 #### 第 5 步：用你自己的语气 co-write README（D-mode）
 
@@ -326,7 +327,7 @@ README 写完后，skill 自动切到 Audit mode，按完整的 hostile-scan rul
 - 10–15+ 个分阶段 commit，第一人称语气的 message。
 - 一份**你和 skill co-write 出来、最终署你名字**的简短 README。
 - 零教学痕迹：没有 `README-cn.md`、没有 `docs/learn-this-project/`、没有 `.claude/skills/learn-this-project-{absorb,quiz,elevate,interview,demo}/`。（`learn-this-project-meta/` 留着是 OK 甚至推荐的。）
-- `mise.toml` + `pyproject.toml` 真的能跑（别人 clone 之后能 `mise install && mise run inst && uv run python examples/s11_create_table.py` 然后成功）。
+- `mise.toml` + `pyproject.toml` 真的能跑（别人 clone 之后能 `mise install && mise run inst && uv run python examples/01-crud-two-styles/s11_create_table.py` 然后成功）。
 - 你能**当场带人走一遍**的代码——意味着你 Absorb 阶段真的读过每一行，不是抄过去就完事了。
 
 那种综合信号——"这个人会拆问题、会一步一步推进、能产出东西"——就是这门课真正的产品。

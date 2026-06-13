@@ -11,9 +11,9 @@ Track your progress through the relational database module (branch `01-Introduct
 ### Setup
 - [ ] Clone the repo and switch to the `01-Introduction-to-Relational-Database` branch
 - [ ] Run `mise install && mise run inst`
-- [ ] Read `examples/README.md` first — it explains why the project has two parallel script series
-- [ ] Verify the s1x raw-SQL series runs: `uv run python examples/s11_create_table.py` through `s15`
-- [ ] Verify the s2x Core Expression series runs: `uv run python examples/s21_create_table.py` through `s25`
+- [ ] Read `examples/01-crud-two-styles/README.md` first — it explains why the project has two parallel script series
+- [ ] Verify the s1x raw-SQL series runs: `uv run python examples/01-crud-two-styles/s11_create_table.py` through `s15`
+- [ ] Verify the s2x Core Expression series runs: `uv run python examples/01-crud-two-styles/s21_create_table.py` through `s25`
 
 ### Absorb (learn the content)
 - [ ] Run `/learn-this-project-absorb` in Orient mode for the high-level map + the read-vs-run classification
