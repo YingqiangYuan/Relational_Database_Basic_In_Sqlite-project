@@ -9,20 +9,20 @@ Track your progress through the relational database module (branch `01-Introduct
 ## Checklist
 
 ### Setup
-- [ ] Clone the repo and switch to the `01-Introduction-to-Relational-Database` branch
-- [ ] Run `mise install && mise run inst`
-- [ ] Read `examples/01-crud-two-styles/README.md` first — it explains why the project has two parallel script series
-- [ ] Verify the s1x raw-SQL series runs: `uv run python examples/01-crud-two-styles/s11_create_table.py` through `s15`
-- [ ] Verify the s2x Core Expression series runs: `uv run python examples/01-crud-two-styles/s21_create_table.py` through `s25`
+- [X] Clone the repo and switch to the `01-Introduction-to-Relational-Database` branch
+- [X] Run `mise install && mise run inst`
+- [X] Read `examples/01-crud-two-styles/README.md` first — it explains why the project has two parallel script series
+- [X] Verify the s1x raw-SQL series runs: `uv run python examples/01-crud-two-styles/s11_create_table.py` through `s15`
+- [X] Verify the s2x Core Expression series runs: `uv run python examples/01-crud-two-styles/s21_create_table.py` through `s25`
 
 ### Absorb (learn the content)
-- [ ] Run `/learn-this-project-absorb` in Orient mode for the high-level map + the read-vs-run classification
-- [ ] Run every script on the run-list yourself, read the SQL output and ASCII tables
-- [ ] Come back to `/learn-this-project-absorb` in Context-dive mode whenever a specific spot needs unpacking
-- [ ] Understand why raw SQL (s1x) is taught before Core (s2x), and why neither uses the ORM
-- [ ] Understand `engine.begin()` vs `engine.connect()` (writes vs reads)
-- [ ] Understand why each script redefines the schema (`:memory:` is per-process + deliberate pedagogical repetition)
-- [ ] Understand the `:name` bound-parameter form in s1x and how it relates to the automatic binding in s2x's Core expressions
+- [X] Run `/learn-this-project-absorb` in Orient mode for the high-level map + the read-vs-run classification
+- [X] Run every script on the run-list yourself, read the SQL output and ASCII tables
+- [X] Come back to `/learn-this-project-absorb` in Context-dive mode whenever a specific spot needs unpacking
+- [X] Understand why raw SQL (s1x) is taught before Core (s2x), and why neither uses the ORM
+- [X] Understand `engine.begin()` vs `engine.connect()` (writes vs reads)
+- [X] Understand why each script redefines the schema (`:memory:` is per-process + deliberate pedagogical repetition)
+- [X] Understand the `:name` bound-parameter form in s1x and how it relates to the automatic binding in s2x's Core expressions
 
 ### Quiz (verify understanding)
 - [ ] Run `/learn-this-project-quiz`, complete at least one full round
